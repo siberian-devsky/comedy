@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Sol",
+    "icon": "☉",
+    "iconCode": "\\u2609"
+  },
+  {
+    "name": "Mercury",
+    "icon": "☿",
+    "iconCode": "\\u263F"
+  },
+  {
+    "name": "Venus",
+    "icon": "♀",
+    "iconCode": "\\u2640"
+  },
+  {
+    "name": "Earth",
+    "icon": "⊕",
+    "iconCode": "\\u2295"
+  },
+  {
+    "name": "Mars",
+    "icon": "♂",
+    "iconCode": "\\u2642"
+  },
+  {
+    "name": "Jupiter",
+    "icon": "♃",
+    "iconCode": "\\u2643"
+  },
+  {
+    "name": "Saturn",
+    "icon": "♄",
+    "iconCode": "\\u2644"
+  },
+  {
+    "name": "Uranus",
+    "icon": "♅",
+    "iconCode": "\\u2645"
+  },
+  {
+    "name": "Neptune",
+    "icon": "♆",
+    "iconCode": "\\u2646"
+  },
+  {
+    "name": "Pluto",
+    "icon": "♇",
+    "iconCode": "\\u2647"
+  }
+]
