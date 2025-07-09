@@ -1,5 +1,5 @@
 import { SetStateAction, useState } from "react";
-import { CellData, PutCellData } from "@/types";
+import { CellData } from "@/types";
 import { CellModalProps, opStatus } from "@/types"
 import CloseButton from "./CloseButton";
 
@@ -36,6 +36,7 @@ export default function UpdateCellModal({
             } else {
                 console.log(data.data)
                 setCells(prev => prev.filter( cell => cell.name != data.data.name ))
+                localStorage.setItem('cache', JSON.stringify(data.data))
                 setOpStatus( {message: `${name} deleted`, status: 'ok'} )
             }
 
@@ -45,12 +46,12 @@ export default function UpdateCellModal({
         }
     }
 
-    const updateCell = async(data: PutCellData) => {
+    const updateCell = async(data: Omit<CellData, 'updated'>) => {
         // sanity check / find the dissidents
         const missing: string[] = []
         if (!data.name)      missing.push('name field')
-        if (!data.icon)      missing.push('icon field')
-        if (!data.iconCode)  missing.push('icon code field')
+        if (!data.hometown)      missing.push('icon field')
+        if (!data.imdbProfile)  missing.push('icon code field')
 
         console.log("check for missing field data")
         if (missing.length > 0) {
@@ -77,6 +78,7 @@ export default function UpdateCellModal({
             setCells(prevCells => prevCells.map(
                 (cell) => cell.id === updatedCellData.id ? updatedCellData : cell
             ))
+            localStorage.setItem('cache', JSON.stringify(updatedCellData))
 
             setSelectedCell(updatedCellData)
 
@@ -94,16 +96,15 @@ export default function UpdateCellModal({
 
         const form = e.currentTarget;
         const name = form.cellName.value.trim();
-        const icon = form.icon.value.trim();
-        const iconCode = form.iconCode.value.trim();
-        const currentValue = Number(form.currentValue.value);
+        const hometown = form.icon.value.trim();
+        const imdbProfile = form.iconCode.value.trim();
         
         console.log("submit data loaded")
     
         if (submitter.name === 'update') {
             const id = selectedCell.id
             console.log("call the PUT gods")
-            updateCell({ id, name, icon, iconCode, currentValue: currentValue });
+            updateCell({ id, name, hometown, imdbProfile});
         } else if (submitter.name === 'delete') {
             console.log("call the DELETE gods")
             deleteCell(name)
@@ -135,23 +136,17 @@ export default function UpdateCellModal({
                         placeholder="pick a number..."
                         />
                     <input
-                        defaultValue={selectedCell?.icon}
+                        defaultValue={selectedCell?.hometown}
                         name='icon'
                         type='text'
                         className='w-3/4 h-8 border-[3px] px-4 border-pink-800 rounded-full'
                         placeholder='Add an icon or emoji' />
                     <input
-                        defaultValue={selectedCell?.iconCode}
+                        defaultValue={selectedCell?.imdbProfile}
                         name='iconCode'
                         type='text'
                         className='w-3/4 h-8 border-[3px] px-4 border-pink-800 rounded-full'
                         placeholder='Now add its code' />
-                    <input
-                        defaultValue={selectedCell?.currentValue}
-                        name='currentValue'
-                        type='number'
-                        className='w-3/4 h-8 border-[3px] px-4 border-pink-800 rounded-full'
-                        placeholder='Pick a number' />
                     <button
                         type='submit'
                         name="update"

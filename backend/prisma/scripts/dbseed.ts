@@ -1,28 +1,27 @@
 import { exit } from "process";
 import { PrismaClient } from "../../src/generated/prisma";
-import planets from "./data.json"
+import comics from "./comics.json"
 
 const prisma = new PrismaClient();
 
-console.log(planets)
+// console.log(comics) //* debug
 
 export default async function seed() {
-    await prisma.basicCell.deleteMany({})
+    await prisma.comic.deleteMany({})
         .then(() => console.log('✅ Purged basicCells'))
         .catch((err) => {
             console.log('❌ table purge failed: ', err)
             exit()
         })
 
-    const basicCells = await prisma.basicCell.createMany({
-        data: planets.map( (planet, idx) => ({
-            currentValue: idx + 1,
-            name: planet.name,
-            icon: planet.icon,
-            iconCode: planet.iconCode,
+    const created = await prisma.comic.createMany({
+        data: comics.map( (comic,) => ({
+            name: comic.name,
+            hometown: comic.hometown,
+            imdbProfile: comic.imdbProfile
         }))
     })
-    console.log('✅ Seeded basicCells:', basicCells);
+    console.log('✅ Seeded Comics:', created);
 }
 
 seed()

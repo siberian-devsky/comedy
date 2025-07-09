@@ -21,6 +21,7 @@ export default function Grid() {
                 const resp = await fetch('http://localhost:8080/api/v1/cells')
                 const data = await resp.json()
                 setCells(data.data)
+                localStorage.setItem('cache', JSON.stringify(data.data))
             } catch (err) {
                 console.log("data: ", err)
             }
@@ -67,10 +68,9 @@ export default function Grid() {
                             key={index}
                             id={cell.id}
                             name={cell.name}
-                            icon={cell.icon}
-                            iconCode={cell.iconCode}
-                            currentValue={cell.currentValue}
-                            lastUpdated={cell.lastUpdated}
+                            hometown={cell.hometown}
+                            imdbProfile={cell.imdbProfile}
+                            updated={cell.updated}
                             onClick={ () => {
                                 setSelectedCell(cell)
                                 setShowUpdateCellModal(true)

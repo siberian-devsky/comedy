@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { PostCellData } from "@/types";
-import { CellModalProps, opStatus } from "@/types"
+import { CellData, CellModalProps, opStatus } from "@/types"
 import CloseButton from "./CloseButton";
 
 export default function AddCellModal( {setShowModal, setCells}: CellModalProps ) {
     const [opStatus, setOpStatus] = useState<opStatus>({ message: null, status: 'ok' })
 
-    const createCell = async(data: PostCellData) => {
+    const createCell = async(data: Omit<CellData, 'id'|'updated'>) => {
         try {
             const resp = await fetch('http://localhost:8080/api/v1/cells/create', {
                 method: 'POST',
@@ -21,6 +20,7 @@ export default function AddCellModal( {setShowModal, setCells}: CellModalProps )
             } else {
                 setOpStatus({ message: `${cellData.data.name} created`, status: 'ok' })
                 setCells(prev => [...prev, cellData.data])
+                localStorage.setItem('cache', JSON.stringify(cellData.data))
             }
 
         } catch (err) {
@@ -32,22 +32,21 @@ export default function AddCellModal( {setShowModal, setCells}: CellModalProps )
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const form = e.currentTarget;
-        const name = form.itemName.value.trim();
-        const icon = form.icon.value.trim();
-        const iconCode = form.iconCode.value.trim();
-        const cv = Number(form.currentValue.value);
+        const name = form.name.valueOf()
+        const hometown = form.hometown.value.trim()
+        const imdbProfile = form.imdbProfile.value.trim()
 
         const missing: string[] = []
         if (!name) missing.push('name field')
-        if (!icon)  missing.push('icon field')
-        if (!iconCode) missing.push('icon code field')
+        if (!hometown)  missing.push('icon field')
+        if (!imdbProfile) missing.push('icon code field')
 
         if (missing.length > 0) {
             setOpStatus({ message: `missing: ${missing}`, status: 'nok' })
             return;
         }
 
-        createCell({ name, icon, iconCode, currentValue: cv });
+        createCell({ name, hometown, imdbProfile });
     }
 
     return (
@@ -55,10 +54,9 @@ export default function AddCellModal( {setShowModal, setCells}: CellModalProps )
             bg-slate-800 flex flex-col items-center justify-center'
         >
             <form className='w-full flex flex-col items-center justify-center gap-4' onSubmit={handleSubmit}>
-                <input name='itemName' type='text' className='w-3/4 h-8 border-[3px] px-4 border-pink-800 rounded-full' placeholder='Add a name' autoFocus />
-                <input name='icon' type='text' className='w-3/4 h-8 border-[3px] px-4 border-pink-800 rounded-full' placeholder='Add an icon or emoji' />
-                <input name='iconCode' type='text' className='w-3/4 h-8 border-[3px] px-4 border-pink-800 rounded-full' placeholder='Now add its code' />
-                <input name='currentValue' type='number' className='w-3/4 h-8 border-[3px] px-4 border-pink-800 rounded-full' placeholder='Pick a number' />
+                <input name='name' type='text' className='w-3/4 h-8 border-[3px] px-4 border-pink-800 rounded-full' placeholder='Add a name' autoFocus />
+                <input name='hometown' type='text' className='w-3/4 h-8 border-[3px] px-4 border-pink-800 rounded-full' placeholder='Add an icon or emoji' />
+                <input name='imdbProfile' type='text' className='w-3/4 h-8 border-[3px] px-4 border-pink-800 rounded-full' placeholder='Now add its code' />
                 <button type='submit' className='w-3/4 bg-lime-600 text-black rounded-full tracking-widest py-1'>Add Cell</button>
             </form>
             <CloseButton setShowModal={setShowModal} />

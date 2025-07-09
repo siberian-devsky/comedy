@@ -6,10 +6,10 @@ type CellProps = CellData & {
     onClick?: () => void
 }
 
-export default function Cell({ id, name, icon, onClick }: CellProps) {
+export default function Cell({ id, name, hometown, imdbProfile, updated, onClick }: CellProps) {
     // const [on, setOn] = useState(false)
 
-    if (id === undefined || name === undefined || icon === undefined) return null
+    if (id === undefined || name === undefined) return null
 
     return (
         <button
@@ -22,8 +22,9 @@ export default function Cell({ id, name, icon, onClick }: CellProps) {
             onClick={ onClick }
         >
             <div className='flex flex-col gap-1.5'>
-                <h1 className='text-2xl'>{name}</h1>
-                <h2 className='text-4xl'>{icon}</h2>
+                <h1 className='text-xl'>{name}</h1>
+                <h2 className='text-xl'>{hometown}</h2>
+                <h2 className='text-xl'>{imdbProfile}</h2>
             </div>
         </button>
     )

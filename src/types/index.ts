@@ -1,23 +1,11 @@
 import { SetStateAction } from "react"
 
-
-export type PutCellData = {
-  id: number
-  name: string
-  icon: string
-  iconCode: string
-  currentValue: number
-}
-
-export type PostCellData = Omit<PutCellData, 'id'>
-
 export type CellData = {
-  id: number
-  name: string
-  icon: string
-  iconCode: string
-  currentValue: number
-  lastUpdated: Date
+  id:          number
+  name:        string    
+  hometown:    string
+  imdbProfile: string
+  updated: Date
 }
 
 export type CellModalProps = {

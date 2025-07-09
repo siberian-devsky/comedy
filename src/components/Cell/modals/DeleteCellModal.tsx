@@ -21,6 +21,7 @@ export default function DeleteCellModal( {setShowModal, setCells}: CellModalProp
             } else {
                 console.log(data.data)
                 setCells(prev => prev.filter( cell => cell.name != data.data.name ))
+                localStorage.setItem('cache', JSON.stringify(data.data))
                 setOpStatus( {message: `${name} deleted`, status: 'ok'} )
             }
 

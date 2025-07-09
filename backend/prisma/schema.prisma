@@ -14,11 +14,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model BasicCell {
-  id            Int       @id @default(autoincrement())
-  name          String    @unique
-  icon          String    @unique
-  iconCode      String    @unique
-  currentValue  Int
-  updatedAt     DateTime  @updatedAt
+model Comic {
+  id          Int       @id @default(autoincrement())
+  name        String 
+  hometown    String
+  imdbProfile String
+  updated     DateTime  @updatedAt
 }

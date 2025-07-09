@@ -1,0 +1,27 @@
+[
+  {
+    "name": "George Carlin",
+    "hometown": "New York, NY",
+    "imdbProfile": "https://www.imdb.com/name/nm0137506/"
+  },
+  {
+    "name": "Joan Rivers",
+    "hometown": "Brooklyn, NY",
+    "imdbProfile": "https://www.imdb.com/name/nm0729639/"
+  },
+  {
+    "name": "Dave Chappelle",
+    "hometown": "Washington, D.C.",
+    "imdbProfile": "https://www.imdb.com/name/nm0152638/"
+  },
+  {
+    "name": "Ali Wong",
+    "hometown": "San Francisco, CA",
+    "imdbProfile": "https://www.imdb.com/name/nm2309517/"
+  },
+  {
+    "name": "Robin Williams",
+    "hometown": "Chicago, IL",
+    "imdbProfile": "https://www.imdb.com/name/nm0000245/"
+  }
+]

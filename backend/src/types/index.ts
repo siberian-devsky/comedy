@@ -4,5 +4,5 @@ export interface CellData {
   icon: string;
   iconCode: string;
   currentValue: number;
-  lastUpdated: Date;
+  updated: Date;
 }

@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 // GET /cells - get all cells
 export async function getAllCells(req: Request, res: Response): Promise<Response> {
   try {
-    const cellData = await prisma.basicCell.findMany()
+    const cellData = await prisma.comic.findMany()
 
     if (!cellData) {
       return res.status(404).json({
@@ -29,11 +29,12 @@ export async function getAllCells(req: Request, res: Response): Promise<Response
   }
 }
 
-// GET /cells/:name - get one cell by name
-export async function getOneCellByName(req: Request, res: Response): Promise<Response> {
+// GET /cells - get one cell by id
+export async function getOneCellById(req: Request, res: Response): Promise<Response> {
+  const { id } = req.body
+  
   try {
-    const name = req.params.name
-    const cell = await prisma.basicCell.findUnique({ where: { name } })
+    const cell = await prisma.comic.findFirst({ where: {id: id}})
 
     if (!cell) {
       return res.status(404).json({
@@ -47,7 +48,7 @@ export async function getOneCellByName(req: Request, res: Response): Promise<Res
       message: 'Cells fetched',
     })
   } catch (err) {
-    console.error("getOneCellByName error:", err)
+    console.error("getOneCellById error:", err)
     return res.status(500).json({
       status: 500,
       mesage: "Internal Server Error"
@@ -57,10 +58,10 @@ export async function getOneCellByName(req: Request, res: Response): Promise<Res
 
 // POST /cells - add a new cell
 export async function createCell(req: Request, res: Response): Promise<Response> {
-  const { name, icon, iconCode, currentValue } = req.body
+  const { name, hometown, imdbProfile } = req.body
 
   // Validate payload
-  if (!name || !icon || !iconCode || currentValue === undefined) {
+  if (!name || !hometown || !imdbProfile) {
     return res.status(400).json({
       status: 400,
       message: "Missing required cell fields"
@@ -68,12 +69,8 @@ export async function createCell(req: Request, res: Response): Promise<Response>
   }
 
   try {
-    // Prevent duplicate
-    const exists = await prisma.basicCell.findUnique({ where: { name } })
-    
-    if (!exists) {
-      const newCell = await prisma.basicCell.create({
-        data: { name, icon, iconCode, currentValue }
+      const newCell = await prisma.comic.create({
+        data: { name, hometown, imdbProfile}
       })
   
       return res.status(201).json({
@@ -81,14 +78,6 @@ export async function createCell(req: Request, res: Response): Promise<Response>
         message: `${name} created`,
         data: newCell
       })
-
-    } else {
-      return res.status(409).json({
-        status: 409,
-        message: `${name} already exists`
-      })
-    }
-
   } catch (err) {
     console.error("createCell error:", err)
     return res.status(500).json({
@@ -100,14 +89,14 @@ export async function createCell(req: Request, res: Response): Promise<Response>
 
 // PUT /cells - update an existing cell
 export async function updateCell(req: Request, res: Response): Promise<Response> {
-  const { id, name, icon, iconCode, currentValue } = req.body
+  const { id, name, hometown, imdbProfile } = req.body
 
-  if (!name || !icon || !iconCode || currentValue === undefined) {
+  if (!name || !hometown || imdbProfile) {
     return res.status(400).json({ error: "Missing required cell fields" })
   }
 
   try {
-    const record = await prisma.basicCell.findUnique({ where: { id: id } })
+    const record = await prisma.comic.findUnique({ where: { id: id } })
 
     if (!record) {
       return res.status(404).json({
@@ -116,13 +105,12 @@ export async function updateCell(req: Request, res: Response): Promise<Response>
       })
     }
 
-    const updated = await prisma.basicCell.update({
+    const updated = await prisma.comic.update({
       where: { id: record.id },
       data: {
-        name: name || record.name, // fallback to whatever is in the db
-        icon: icon || record.icon,
-        iconCode: iconCode || record.iconCode,
-        currentValue: currentValue || record.currentValue
+        name: name || record.name, // fallback to whatever is in the db for these
+        hometown: hometown || record.hometown,
+        imdbProfile: imdbProfile || record.imdbProfile,
       }
     })
       return res.status(200).json({
@@ -139,9 +127,9 @@ export async function updateCell(req: Request, res: Response): Promise<Response>
   }
 }
 
-// DELETE /cells/delete/:name - delete cell by name
-export async function deleteCellByName(req: Request, res: Response): Promise<Response> {
-  const { name } = req.body
+// DELETE /cells/delete - delete cell by ID
+export async function deleteCellById(req: Request, res: Response): Promise<Response> {
+  const { name, id } = req.body
   console.debug(`name: ${name}`)
 
   if (!name) {
@@ -152,8 +140,8 @@ export async function deleteCellByName(req: Request, res: Response): Promise<Res
   }
 
   try {
-      const deleted = await prisma.basicCell.delete({
-          where: { name: name }
+      const deleted = await prisma.comic.delete({
+          where: { id: id }
       })
 
       console.log(`${name} was purged`)
