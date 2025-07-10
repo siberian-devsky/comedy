@@ -23,5 +23,55 @@
     "name": "Robin Williams",
     "hometown": "Chicago, IL",
     "imdbProfile": "https://www.imdb.com/name/nm0000245/"
+  },
+  {
+    "name": "Bill Hicks",
+    "hometown": "Valdosta, GA",
+    "imdbProfile": "https://www.imdb.com/name/nm0383076/"
+  },
+  {
+    "name": "Richard Pryor",
+    "hometown": "Peoria, IL",
+    "imdbProfile": "https://www.imdb.com/name/nm0001627/"
+  },
+  {
+    "name": "Tig Notaro",
+    "hometown": "Jackson, MS",
+    "imdbProfile": "https://www.imdb.com/name/nm1674166/"
+  },
+  {
+    "name": "Chris Rock",
+    "hometown": "Andrews, SC",
+    "imdbProfile": "https://www.imdb.com/name/nm0001674/"
+  },
+  {
+    "name": "Patton Oswalt",
+    "hometown": "Portsmouth, VA",
+    "imdbProfile": "https://www.imdb.com/name/nm0652663/"
+  },
+  {
+    "name": "Ricky Gervais",
+    "hometown": "Reading, England",
+    "imdbProfile": "https://www.imdb.com/name/nm0315041/"
+  },
+  {
+    "name": "Eddie Izzard",
+    "hometown": "Aden, Yemen (raised in Wales)",
+    "imdbProfile": "https://www.imdb.com/name/nm0410618/"
+  },
+  {
+    "name": "James Acaster",
+    "hometown": "Kettering, England",
+    "imdbProfile": "https://www.imdb.com/name/nm3926943/"
+  },
+  {
+    "name": "Sarah Millican",
+    "hometown": "South Shields, England",
+    "imdbProfile": "https://www.imdb.com/name/nm3120981/"
+  },
+  {
+    "name": "Billy Connolly",
+    "hometown": "Glasgow, Scotland",
+    "imdbProfile": "https://www.imdb.com/name/nm0174992/"
   }
 ]
