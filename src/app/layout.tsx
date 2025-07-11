@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang='en' suppressHydrationWarning> 
       <body className='max-w-screen overflow-x-hidden flex flex-col items-center justify-center'>
         <ThemeProvider attribute='class'>
           <KeyHandler />
