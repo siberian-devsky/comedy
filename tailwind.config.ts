@@ -8,4 +8,5 @@ const config = {
   darkMode: ['selector', '.dark'],
 }
 
+
 export default config

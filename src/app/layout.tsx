@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className={'w-full h-full flex flex-col items-center justify-center'}>
+      <body className={'w-full h-full overflow-hidden flex flex-col items-center justify-center'}>
         <ThemeProvider attribute='class'>
           <KeyHandler />
           {children}

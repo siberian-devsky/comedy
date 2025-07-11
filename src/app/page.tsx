@@ -1,18 +1,20 @@
 'use client'
 import { useEffect, useState } from 'react';
 import Cell from '@/components/Cell';
+import CellModal from '@/components/Cell/modals/CellModal';
 import { CellData } from '@/types';
 import Header from '@/components/Header'
-import AddCellModal from '@/components/Cell/modals/AddCellModal';
-import UpdateCellModal from '@/components/Cell/modals/UpdateCellModal';
-import DeleteCellModal from '@/components/Cell/modals/DeleteCellModal';
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
+
 
 export default function Grid() {
     const [cells, setCells] = useState<CellData[]>([])
-    const [showAddCellModal, setShowAddCellModal] = useState(false)
-    const [showUpdateCellModal, setShowUpdateCellModal] = useState(false)
-    const [showDeleteCellModal, setShowDeleteCellModal] = useState(false)
-    const [selectedCell, setSelectedCell] = useState<CellData | null>(null)
+    const [showCellModal, setShowCellModal] = useState(false)
+    const [selectedCell, setSelectedCell] = useState<CellData>(null)
+    
+    const { theme, setTheme } = useTheme()
+    const isDarkMode = theme === 'dark'
 
     // fetch cell data from the db
     useEffect(() => {
@@ -31,20 +33,18 @@ export default function Grid() {
 
     // bg behavior on modal
     useEffect( () => {
-        if (showAddCellModal || showDeleteCellModal) {
+        if (showCellModal) {
             document.body.style.overflow = 'hidden'
         } else {
             document.body.style.overflow = 'auto'
         }
-    }, [showAddCellModal, showDeleteCellModal])
+    }, [showCellModal])
 
-    // kill all modals
+    // kill any modals
     useEffect( () => {
         const handleKey = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
-                setShowAddCellModal(false)
-                setShowDeleteCellModal(false)
-                setShowUpdateCellModal(false)
+                setShowCellModal(false)
             }
         }
 
@@ -53,58 +53,57 @@ export default function Grid() {
     })
 
     return(
-        <main className="relative w-full flex flex-row justify-center items-center">
-            <Header 
-                showAddCellModal={setShowAddCellModal}
-                showDeleteCellModal={setShowDeleteCellModal}
-            />
-            <div className='relative w-full h-screen'>
+        <main className="w-full h-full justify-center items-center">
+            <Header />
+            <div className="relative w-full h-96">
+                <Image
+                    src="/club-marquis.jpg"
+                    alt="Comedy Club Marquee"
+                    fill
+                    className="object-cover blur-sm brightness-75"
+                    priority
+                />
+                <div className="absolute inset-0 bg-black/30 z-0" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 text-white z-10">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-yellow-400 drop-shadow-lg">
+                    Stand-Up Royalty
+                    </h1>
+                    <p className="mt-4 text-lg sm:text-xl text-white max-w-xl drop-shadow-md">
+                    A living archive of legends, laughs, and the loudest punchlines across generations.
+                    </p>
+                </div>
+            </div>
+            <div className='w-full h-screen px-8'>
                 <div
-                    id='gridverseGrid'
-                    className='absolute w-full place-items-center m-4 grid translate-y-24 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4'
-                >
-                    {cells.map((cell, index) => (
+                    id='comedyStack'
+                    className='w-full flex flex-col gap-64'
+                    >
+                    {cells !== null &&
+                        cells.map((cell, index) => (
                         <Cell
-                            key={index}
-                            id={cell.id}
-                            name={cell.name}
-                            hometown={cell.hometown}
-                            imdbProfile={cell.imdbProfile}
-                            updated={cell.updated}
-                            onClick={ () => {
-                                setSelectedCell(cell)
-                                setShowUpdateCellModal(true)
+                            key={cell?.id}
+                            {...cell}
+                            isDarkMode={isDarkMode}
+                            isCellIndexEven={index % 2 === 0}
+                            selectCellAndShowModal={() => {
+                            setSelectedCell(cell)
+                            setShowCellModal(true)
                             }}
                         />
                     ))}
                 </div>
-                {showAddCellModal && (
-                    <div className="fixed inset-0 backdrop-brightness-50 flex items-center justify-center z-50">
-                        <AddCellModal 
-                            setShowModal={setShowAddCellModal}
-                            setCells={setCells}
-                        />
-                    </div>
-                )}
-                {showUpdateCellModal && selectedCell && (
-                    <div className="fixed inset-0 backdrop-brightness-50 flex items-center justify-center z-50">
-                        <UpdateCellModal
-                            setShowModal={setShowUpdateCellModal}   // just passing through
-                            setCells={setCells}                     // update main grid
-                            selectedCell={selectedCell}             // populates the update form with cell's curr. data
-                            setSelectedCell={setSelectedCell}       // sync this with local modal state tracking
-                        />
-                    </div>
-                )}
-                {showDeleteCellModal && (
-                    <div className="fixed inset-0 backdrop-brightness-50 flex items-center justify-center z-50">
-                        <DeleteCellModal
-                            setShowModal={setShowDeleteCellModal}
-                            setCells={setCells}
-                        />
-                    </div>
-                )}
             </div>
+
+            {showCellModal && (
+                <div className="fixed inset-0 backdrop-brightness-50 flex items-center justify-center z-50">
+                    <CellModal
+                        // sync this with local modal state tracking
+                        selectedCell={selectedCell}
+                        // passed down to close buttonn component
+                        setShowModal={setShowCellModal}
+                    />
+                </div>
+            )}
         </main>
     )
 }
