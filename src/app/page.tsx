@@ -13,7 +13,7 @@ export default function Grid() {
     const [showCellModal, setShowCellModal] = useState(false)
     const [selectedCell, setSelectedCell] = useState<CellData>(null)
     
-    const { theme, setTheme } = useTheme()
+    const {theme,} = useTheme()
     const isDarkMode = theme === 'dark'
 
     // fetch cell data from the db
@@ -53,14 +53,14 @@ export default function Grid() {
     })
 
     return(
-        <main className="w-full h-full justify-center items-center">
+        <main className="w-full h-full overflow-x-hidden flex flex-col items-center">
             <Header />
-            <div className="relative w-full h-96">
+            <div className="relative w-full h-screen">
                 <Image
-                    src="/club-marquis.jpg"
+                    src="/club-marquis.png"
                     alt="Comedy Club Marquee"
                     fill
-                    className="object-cover blur-sm brightness-75"
+                    className="object-cover blur-[14px] brightness-75"
                     priority
                 />
                 <div className="absolute inset-0 bg-black/30 z-0" />
@@ -73,10 +73,10 @@ export default function Grid() {
                     </p>
                 </div>
             </div>
-            <div className='w-full h-screen px-8'>
+            <div className="w-full px-8 mt-16">
                 <div
                     id='comedyStack'
-                    className='w-full flex flex-col gap-64'
+                    className='w-full flex flex-col gap-48'
                     >
                     {cells !== null &&
                         cells.map((cell, index) => (

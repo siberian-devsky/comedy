@@ -27,11 +27,12 @@ export default function ThemeSlider() {
         'justify-start',
         'w-12',
         'h-6',
+        'translate-y-1',
         'overflow-hidden',
         'rounded-full',
         'cursor-pointer',
-        'border',
-        'border-purple-500',
+        'border-2',
+        'border-imdb',
         isDark ? 'bg-slate-800' : 'bg-white'
       )}
     >
