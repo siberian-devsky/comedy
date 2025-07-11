@@ -53,8 +53,8 @@ export default function Grid() {
     })
 
     return(
-        <main className="w-full h-full overflow-x-hidden flex flex-col items-center relative">
-            <div className="fixed inset-0 -z-10">
+        <main className="w-full h-full overflow-x-hidden flex flex-col items-center">
+            <div>
                 <Image
                     src="/club-marquis.png"
                     alt="Comedy Club Marquee"
