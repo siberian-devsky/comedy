@@ -27,8 +27,9 @@ export default function Cell({
                 ? 'justify-start ps-6 bg-gradient-to-r border-l-4 border-l-imdb'
                 : 'justify-end pe-6 bg-gradient-to-l border-r-4 border-r-imdb',
             isDarkMode
-                ? 'from-imdb via-80% via-[#121212] to-[#121212]'
-                : 'from-imdb via-80% via-white to-white'
+                // ? 'from-imdb via-80% via-[#121212] to-[#121212]'
+                ? 'from-imdb via-80% via-transparent to-transparent'
+                : 'from-imdb via-80% via-transparent to-transparent'
           )}
         >
           <button

@@ -1,13 +1,13 @@
 [
   {
-    "name": "George Carlin",
-    "hometown": "New York, NY",
-    "imdbProfile": "https://www.imdb.com/name/nm0137506/"
-  },
-  {
     "name": "Joan Rivers",
     "hometown": "Brooklyn, NY",
     "imdbProfile": "https://www.imdb.com/name/nm0729639/"
+  },
+  {
+    "name": "George Carlin",
+    "hometown": "New York, NY",
+    "imdbProfile": "https://www.imdb.com/name/nm0137506/"
   },
   {
     "name": "Dave Chappelle",
