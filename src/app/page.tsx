@@ -68,10 +68,10 @@ export default function Grid() {
                 <div className="relative w-full h-screen">
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 text-white">
                         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-yellow-400 drop-shadow-lg">
-                        everybody hurts
+                        i hate it here
                         </h1>
-                        <p className="mt-4 text-lg sm:text-xl text-white max-w-xl drop-shadow-md">
-                        fffffffuuuu....
+                        <p className="mt-4 text-lg sm:text-xl text-white/30 max-w-xl drop-shadow-md">
+                        you might like it though
                         </p>
                     </div>
                 </div>

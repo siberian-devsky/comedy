@@ -4,8 +4,7 @@ import KeyHandler from '@/components/Theme/ThemeToggleHotkeyHandler';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'gridverse',
-  description: 'a verse of grids',
+  title: "fffAnnny cooMMmmmics"
 };
 
 export default function RootLayout({
