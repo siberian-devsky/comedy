@@ -9,6 +9,7 @@ export default function Header() {
                 w-screen h-16 flex flex-row items-center justify-between
                 px-8 py-2"
         >   
+            {/* Left side navigation buttons */}
             <div className="flex flex-row gap-8 h-full w-auto items-center">
                 <button className={clsx(
                     'cursor-pointer min-w-16 h-8 rounded-lg text-imdb border-2 border-imdb'
@@ -23,6 +24,7 @@ export default function Header() {
                     about
                 </button>
             </div>
+            {/* Right side search and theme controls */}
             <div className='flex flex-row gap-8'>
                 <form action="/api/v1/cells" onSubmit={ () => {}}>
                     <button

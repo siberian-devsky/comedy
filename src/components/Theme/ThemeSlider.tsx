@@ -4,22 +4,22 @@ import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 
 export default function ThemeSlider() {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme() // Get theme context
+  const [mounted, setMounted] = useState(false) // Track hydration state
 
   useEffect(() => {
-    setMounted(true)
+    setMounted(true) // Prevent SSR mismatch
   }, [])
 
   if (!mounted) return null // avoid SSR mismatch
 
-  const isDark = theme === 'dark'
+  const isDark = theme === 'dark' // Determine current theme
 
   return (
     <div
       role='switch'
       aria-checked={isDark}
-      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      onClick={() => setTheme(isDark ? 'light' : 'dark')} // Toggle theme on click
       className={clsx(
         'flex',
         'flex-row',
@@ -33,7 +33,7 @@ export default function ThemeSlider() {
         'cursor-pointer',
         'border-2',
         'border-imdb',
-        isDark ? 'bg-slate-800' : 'bg-white'
+        isDark ? 'bg-slate-800' : 'bg-white' // Background based on theme
       )}
     >
       <div className={clsx(
@@ -48,8 +48,8 @@ export default function ThemeSlider() {
           'h-3',
           'rounded-full',
           isDark
-            ? 'bg-white translate-x-1 duration-200 ease-in'
-            : 'bg-black translate-x-[260%] duration-200 ease-in'
+            ? 'bg-white translate-x-1 duration-200 ease-in' // Dark mode: white circle on left
+            : 'bg-black translate-x-[260%] duration-200 ease-in' // Light mode: black circle on right
         )}
         ></div>
       </div>
