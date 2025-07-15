@@ -33,9 +33,10 @@ export default function ThemeSlider() {
         'cursor-pointer',
         'border-2',
         'border-imdb',
-        isDark ? 'bg-slate-800' : 'bg-white' // Background based on theme
+        isDark ? 'bg-slate-800' : 'bg-white'
       )}
     >
+      {/* the pill */}
       <div className={clsx(
         'w-full',
         'flex',
@@ -43,13 +44,14 @@ export default function ThemeSlider() {
         'items-center',
         'justify-start',
       )}>
+        {/* the toggle */}
         <div className={clsx(
           'w-3',
           'h-3',
           'rounded-full',
           isDark
-            ? 'bg-white translate-x-1 duration-200 ease-in' // Dark mode: white circle on left
-            : 'bg-black translate-x-[260%] duration-200 ease-in' // Light mode: black circle on right
+            ? 'bg-white translate-x-1 duration-200 ease-in'
+            : 'bg-black translate-x-[260%] scale-125 duration-200 ease-in'
         )}
         ></div>
       </div>
