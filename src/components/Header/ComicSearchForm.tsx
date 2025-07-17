@@ -44,7 +44,6 @@ export default function ComicSearchForm({ setCells }: SetCellsProps) {
                 type='text'
                 value={searchInput}
                 onChange={ (e) => setSearchInput(e.target.value) }
-                autoComplete='true'
                 className='w-1/2 h-8 px-2 rounded-lg border border-icdb grow md:grow-0
                 focus:outline-none focus:ring-2 focus:ring-icdb focus:bg-icdb/25'
                 placeholder='meta + k to search ...'
@@ -56,5 +55,5 @@ export default function ComicSearchForm({ setCells }: SetCellsProps) {
                 FIND
             </button>
         </form>
-    )
+    )   
 }
