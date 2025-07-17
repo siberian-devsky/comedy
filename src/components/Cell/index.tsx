@@ -15,7 +15,7 @@ export default function Cell({
     <div
       id={id.toString()}
       className={clsx(
-        'w-full h-64 rounded-xl flex items-center justify-center',
+        'w-2/3 h-48 rounded-xl flex items-center justify-center',
         'mx-2 shadow-md shadow-icdb/25', 
         'hover:shadow-icdb hover:shadow-lg duration-500',
       )}

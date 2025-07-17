@@ -54,13 +54,13 @@ export default function Grid() {
 
             <main className="flex flex-row h-full w-full overflow-hidden">
                 {/* Sidebar (Left) */}
-                <aside className="w-1/3 min-w-[300px] max-w-[400px] h-full overflow-y-auto border-r border-gray-200">
+                <aside className="w-1/4 min-w-[300px] max-w-[400px] h-full overflow-y-auto border-r border-gray-200">
                     {dataLoading ? (
                         <div className="w-full h-full flex items-center justify-center">
                             <span>Loading...</span>
                         </div>
                     ) : (
-                        <div id="comedyStack" className="flex flex-col gap-8 p-4">
+                        <div id="comedyStack" className="flex flex-col items-center gap-8 p-4">
                             {cells
                                 .filter((cell): cell is CellData => !!cell)
                                 .map((cell, i) => (
