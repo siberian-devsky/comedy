@@ -1,9 +1,22 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SetCellsProps } from '@/types';
 
 export default function ComicSearchForm({ setCells }: SetCellsProps) {
     const [searchInput, setSearchInput] = useState('')
+
+    useEffect(() => {
+        const searchHandler = (e: KeyboardEvent) => {
+            if (e.key.toLowerCase() === 'k' && e.metaKey) {
+                e.preventDefault()
+                const input = document.querySelector('#comicSearchForm') as HTMLInputElement
+                input?.focus()
+            }
+        }
+
+        window.addEventListener('keydown', searchHandler)
+        return () => window.removeEventListener('keydown', searchHandler)
+    }, [])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -34,6 +47,7 @@ export default function ComicSearchForm({ setCells }: SetCellsProps) {
                 autoComplete='true'
                 className='w-1/2 h-8 px-2 rounded-lg border border-icdb grow md:grow-0
                 focus:outline-none focus:ring-2 focus:ring-icdb focus:bg-icdb/25'
+                placeholder='meta + k to search ...'
             />
             <button
                 type='submit'
