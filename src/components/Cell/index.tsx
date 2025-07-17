@@ -4,12 +4,10 @@ import clsx from 'clsx'
 export default function Cell({
   id,
   name,
-  isDarkMode,
   selectCellAndShowModal,
 }: {
   id: number
   name: string
-  isDarkMode: boolean
   isCellIndexEven: boolean
   selectCellAndShowModal: () => void
 }) {

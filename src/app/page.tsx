@@ -67,7 +67,7 @@ export default function Grid() {
         <main 
         id='mainContent'
         className="w-full h-full overflow-x-hidden flex flex-col items-center">
-            <div className='h-[50vh] w-full'>
+            <div className='h-[75vh] w-full'>
                 <Hero />
             </div>
             <Header setCells={setCells}/>

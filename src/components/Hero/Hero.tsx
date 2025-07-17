@@ -3,7 +3,7 @@
 import Image from "next/image"
 export default function Hero() {
     return (
-        <div id='hero' className='w-full h-full relative'>
+        <div id='hero' className='w-full h-full relative mt-10'>
             <Image
                 src='/club-marquis.png'
                 alt='Comedy Club Marquee'

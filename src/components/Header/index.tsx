@@ -72,8 +72,8 @@ export default function Header(
             <div className={clsx(
                 'fixed z-40 top-0 left-0 w-full h-auto p-4',
                 'flex flex-col gap-2 items-center',
-                'bg-icdb/70',
-                'transition-all duration-700 ease-in-out',
+                'bg-slate-900/70',
+                'transition-all duration-300 ease-in-out',
                 isMobileMenuOpen && viewportWidth < 500
                     ? 'opacity-100 translate-y-16 pointer-events-auto'
                     : 'opacity-0 translate-y-0 pointer-events-none'
