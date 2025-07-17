@@ -29,7 +29,7 @@ export async function GetAllCells(req: Request, res: Response): Promise<Response
   }
 }
 
-// GET /cells - get one cell by id
+// GET /cells - get one cell by name
 export async function GetOneCellByName(req: Request, res: Response): Promise<Response> {
   const { searchInput } = req.body
   
@@ -43,10 +43,13 @@ export async function GetOneCellByName(req: Request, res: Response): Promise<Res
       })
     }
 
+    // client expects a list
+    const dataAsList = [data]
+
     return res.status(200).json({
       status: 200,
       message: `${searchInput} fetched`,
-      comic: data
+      comic: dataAsList
     })
   } catch (err) {
     console.error("GetOneCellByName error:", err)

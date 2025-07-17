@@ -13,6 +13,11 @@ export default function ComicSearchForm({ setCells }: SetCellsProps) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ searchInput })
         })
+
+        if (res.status === 404) {
+            setCells([]) // return an empty case and let the client handle it
+            return
+        }
         
         const data = await res.json()
         setCells(data.comic)
