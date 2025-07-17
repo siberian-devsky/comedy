@@ -1,0 +1,223 @@
+{
+    "security.workspace.trust.untrustedFiles": "open",
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "workbench.startupEditor": "none",
+    "python.pythonPath": "${workspaceFolder}/env/bin/python3",
+    "editor.minimap.enabled": false,
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": true,
+        "strings": true
+    },
+    "todo-tree.highlights.defaultHighlight": {
+        "icon": "alert",
+        "type": "text-and-comment",
+        "foreground": "black",
+        "background": "white",
+        "opacity": 50,
+        "iconColour": "blue",
+        "gutterIcon": true
+    },
+    "todo-tree.highlights.customHighlight": {
+        "TODO": {
+            "icon": "check",
+            "foreground": "#FFFF00",
+            "background": "#070505",
+            "iconColour": "#FFFF00"
+        },
+        "FIXME": {
+            "foreground": "#FF0000",
+            "background": "#070505",
+            "iconColour": "#FF0000"
+        }
+    },
+    "todo-tree.general.tags": ["FIXME", "TODO"],
+    "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS).*(\\n\\s*//\\s{2,}.*)*",
+    "workbench.sideBar.location": "right",
+    "gitlens.defaultTimeFormat": "HH:mm",
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "telemetry.telemetryLevel": "error",
+    "salesforcedx-vscode-core.telemetry.enabled": false,
+    "redhat.telemetry.enabled": false,
+    "salesforcedx-vscode-apex.java.home": "C:\\Program Files\\Java\\jre1.8.0_311\\bin",
+    "editor.accessibilitySupport": "off",
+    "[xml]": {
+        "editor.defaultFormatter": "DotJoshJohnson.xml"
+    },
+    "sync.gist": "",
+    "terminal.integrated.env.osx": {
+        "FIG_NEW_SESSION": "1"
+    },
+    "html.format.contentUnformatted": "",
+    "editor.bracketPairColorization.enabled": true,
+    "workbench.colorCustomizations": {},
+    "files.autoSave": "afterDelay",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "terminal.external.windowsExec": "/mnt/c/Windows/System32/cmd.exe",
+    "isort.check": true,
+    "editor.tokenColorCustomizations": {
+        "comments": "#e37777"
+    },
+    "editor.fontSize": 16,
+    "vscode-postgres.showExplorer": true,
+    "vscode-postgres.prettyPrintJSONfields": true,
+    "git.openRepositoryInParentFolders": "never",
+    "python.defaultInterpreterPath": "/Users/jeff/code/python/flask-projects/tmp/scratch/.venv",
+    "editor.renderWhitespace": "none",
+    "emmet.includeLanguages": {
+        "jinja-html": "html"
+    },
+    "python.languageServer": "Pylance",
+    "workbench.settings.applyToAllProfiles": [
+        "vsintellicode.python.completionsEnabled",
+        "python.analysis.packageIndexDepths"
+    ],
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.pytestParameters": true,
+    "python.analysis.packageIndexDepths": [
+        {
+            "name": "sklearn",
+            "depth": 2
+        },
+        {
+            "name": "matplotlib",
+            "depth": 2
+        },
+        {
+            "name": "scipy",
+            "depth": 2
+        },
+        {
+            "name": "django",
+            "depth": 2
+        },
+        {
+            "name": "flask",
+            "depth": 2
+        },
+        {
+            "name": "fastapi",
+            "depth": 2
+        }
+    ],
+    "explorer.fileNesting.patterns": {
+        "*.ts": "${capture}.js",
+        "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+        "*.jsx": "${capture}.js",
+        "*.tsx": "${capture}.ts",
+        "tsconfig.json": "tsconfig.*.json",
+        "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+        "*.sqlite": "${capture}.${extname}-*",
+        "*.db": "${capture}.${extname}-*",
+        "*.sqlite3": "${capture}.${extname}-*",
+        "*.db3": "${capture}.${extname}-*",
+        "*.sdb": "${capture}.${extname}-*",
+        "*.s3db": "${capture}.${extname}-*"
+    },
+    "vsintellicode.python.completionsEnabled": false,
+    "intellicodeApiExamples.python.enabled": false,
+    "markdown-preview-enhanced.codeBlockTheme": "atom-material.css",
+    "console-ninja.featureSet": "Community",
+    "css.enabledLanguages": ["html"],
+    "css.styleSheets": ["css"],
+    "html-css-class-completion.enableEmmetSupport": true,
+    "html-css-class-completion.HTMLLanguages": [
+        "html",
+        "vue",
+        "razor",
+        "blade",
+        "handlebars",
+        "twig",
+        "django-html",
+        "php",
+        "markdown",
+        "erb",
+        "ejs",
+        "svelte"
+    ],
+    "html-css-class-completion.JavaScriptLanguages": [
+        "javascript",
+        "javascriptreact",
+        "typescriptreact"
+    ],
+    "workbench.editor.enablePreview": false,
+    "yaml.schemas": {
+        "file:///Users/jeff/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i"
+    },
+    "chat.commandCenter.enabled": false,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    // "[typescriptreact]": {
+    //     "editor.defaultFormatter": "vscode.typescript-language-features"
+    // },
+    // "[typescript]": {
+    //     "editor.defaultFormatter": "vscode.typescript-language-features"
+    // },
+
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "[javascript]": {
+        "editor.tabSize": 4
+    },
+    "[typescript]": {
+        "editor.tabSize": 4
+    },
+    "prettier.tabWidth": 4,
+    "prettier.useTabs": false,
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "better-comments.tags": [
+        {
+            "tag": "!",
+            "color": "#FF2D00", //! {"color": "#FF2D00"}
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "//",
+            "color": "#474747", // {"color": "#474747"}
+            "strikethrough": true,
+            "underline": false,
+            "backgroundColor": "#transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "todo",
+            "color": "#ffff00", //todo {"color": "#ffff00"}
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "tip", // helpful timy code tips
+            "color": "#00eeaa", // tip {"color": "#00eeaa"}
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "?",
+            "color": "#00ff0088",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "#ffffff22",
+            "bold": false,
+            "italic": false
+        }
+    ]
+}

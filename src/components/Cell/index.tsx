@@ -18,15 +18,14 @@ export default function Cell({
       id={id.toString()}
       className={clsx(
         'w-full h-64 rounded-xl flex items-center justify-center',
-        'transition-transform hover:scale-[0.98]',
-        'mx-2 shadow-sm',
-        isDarkMode ? 'shadow-icdb' : 'shadow-slate-800'
+        'mx-2 shadow-md shadow-icdb/25', 
+        'hover:shadow-icdb hover:shadow-lg duration-500',
       )}
     >
       <button
         onClick={selectCellAndShowModal} // Handle cell selection
         className="
-            px-3 sm:px-4 py-2 rounded-md font-extrabold text-slate-800 bg-icdb shadow
+            px-3 sm:px-4 py-2 rounded-md font-extrabold text-slate-800 bg-icdb
             transition-transform hover:scale-[1.02] cursor-pointer
             text-sm sm:text-base md:text-lg" // Responsive text sizing
       >

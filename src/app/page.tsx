@@ -11,17 +11,19 @@ export default function Grid() {
     const [cells, setCells] = useState<CellData[]>([]) // Store comedy cell data
     const [showCellModal, setShowCellModal] = useState(false) // Control modal visibility
     const [selectedCell, setSelectedCell] = useState<CellData>(null) // Track selected cell for modal
+    const [dataLoading, setDataLoading] = useState(false)
     
     const {theme,} = useTheme()
     const isDarkMode = theme === 'dark' // Determine current theme
 
     // Fetch comedy cells from local or db
     useEffect(() => {
+        setDataLoading(true)
         const comedyCache = localStorage.getItem('comedyCache')
         if (comedyCache) {
             const cellarComics: CellData[] = JSON.parse(comedyCache)
             setCells(cellarComics)
-            localStorage.removeItem('comedyCellar')
+            setDataLoading(false)
         } else {
             const fetchAllCells = async () => {
                 try {
@@ -30,6 +32,7 @@ export default function Grid() {
                     const comics = data.comics
                     
                     setCells(comics) // set view
+                    setDataLoading(false)
                     localStorage.setItem('comedyCache', JSON.stringify(comics)) // Cache data locally
                 } catch (err) {
                     console.log("error: ", err)
@@ -61,39 +64,45 @@ export default function Grid() {
     })
 
     return(
-        <main className="w-full h-full overflow-x-hidden flex flex-col items-center">
+        <main 
+        id='mainContent'
+        className="w-full h-full overflow-x-hidden flex flex-col items-center">
             <div className='h-[50vh] w-full'>
                 <Hero />
             </div>
             <Header setCells={setCells}/>
             {/* Comedy cells container with responsive spacing */}
             <div className="w-full px-4 sm:px-6 md:px-8 mt-16">
-                <div
-                    id='comedyStack'
-                    className='w-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 
-                         gap-8 border-[1px] border-lime-400 p-16'
-                    >
-                    {/* render grid */}
-                    {cells.length > 0
-                        ? cells
-                        .filter((cell): cell is NonNullable<typeof cell> => cell !== null) // Filter out null cells
-                            .map((cell, index) => (
-                                <Cell
-                                    key={cell.id}
-                                    {...cell}
-                                    isDarkMode={isDarkMode}
-                                    isCellIndexEven={index % 2 === 0} // Alternate left/right alignment
-                                    selectCellAndShowModal={() => {
-                                    setSelectedCell(cell) // Set selected cell
-                                    setShowCellModal(true) // Open modal
-                                    }}
-                                />
-                            ))
-                        : <div className='w-full h-full text-9xl justify-center'>
-                            loading
-                        </div>
-                    }
-                </div>
+                {dataLoading
+                    ? <div id='comedyStackLoading'
+                        className='w-full h-full flex flex-col justify-center items-center'
+                        >
+                            <div className='w-full h-full border-2 border-blue-600'>loading</div>
+                    </div>
+                    : <div
+                        id='comedyStack'
+                        className='w-full grid sm:grid-cols-1 md:grid-cols-2 
+                            gap-8 p-16'
+                        >
+                        {/* render grid */}
+                        {cells.length > 0
+                            && cells
+                            .filter((cell): cell is NonNullable<typeof cell> => cell !== null) // Filter out null cells
+                                .map((cell, index) => (
+                                    <Cell
+                                        key={cell.id}
+                                        {...cell}
+                                        isDarkMode={isDarkMode}
+                                        isCellIndexEven={index % 2 === 0} // Alternate left/right alignment
+                                        selectCellAndShowModal={() => {
+                                            setSelectedCell(cell) // Set selected cell
+                                            setShowCellModal(true) // Open modal
+                                        }}
+                                    />
+                                ))
+                            }
+                    </div>
+                }
             </div>
 
             {/* Modal overlay for cell details */}

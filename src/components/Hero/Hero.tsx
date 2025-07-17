@@ -8,7 +8,7 @@ export default function Hero() {
                 src='/club-marquis.png'
                 alt='Comedy Club Marquee'
                 fill
-                className='object-center blur-[9px] brightness-75'
+                className='object-center blur-sm brightness-75'
                 priority
             />
             <div className='absolute inset-0 flex flex-col items-center justify-center text-center px-4 text-white z-10'>

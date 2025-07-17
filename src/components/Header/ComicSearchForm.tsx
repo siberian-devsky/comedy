@@ -19,13 +19,15 @@ export default function ComicSearchForm({ setCells }: SetCellsProps) {
     }
     
     return (
-        <form onSubmit={handleSubmit}>
+        <form className='w-full flex flex-row' 
+            onSubmit={handleSubmit}>
             <input
+                id='comicSearchForm'
                 type='text'
                 value={searchInput}
                 onChange={ (e) => setSearchInput(e.target.value) }
                 autoComplete='true'
-                className='w-64 h-8 ml-4 px-2 rounded-lg border border-icdb
+                className='w-1/2 h-8 px-2 rounded-lg border border-icdb grow md:grow-0
                 focus:outline-none focus:ring-2 focus:ring-icdb focus:bg-icdb/25'
             />
             <button
