@@ -5,16 +5,12 @@ import CellModal from '@/components/Cell/modals/CellModal';
 import { CellData } from '@/types';
 import Header from '@/components/Header'
 import Hero from '@/components/Hero/Hero';
-import { useTheme } from 'next-themes';
 
 export default function Grid() {
     const [cells, setCells] = useState<CellData[]>([]) // Store comedy cell data
     const [showCellModal, setShowCellModal] = useState(false) // Control modal visibility
     const [selectedCell, setSelectedCell] = useState<CellData>(null) // Track selected cell for modal
     const [dataLoading, setDataLoading] = useState(false)
-    
-    const {theme,} = useTheme()
-    const isDarkMode = theme === 'dark' // Determine current theme
 
     // Fetch comedy cells from local or db
     useEffect(() => {
@@ -92,7 +88,6 @@ export default function Grid() {
                                     <Cell
                                         key={cell.id}
                                         {...cell}
-                                        isDarkMode={isDarkMode}
                                         isCellIndexEven={index % 2 === 0} // Alternate left/right alignment
                                         selectCellAndShowModal={() => {
                                             setSelectedCell(cell) // Set selected cell

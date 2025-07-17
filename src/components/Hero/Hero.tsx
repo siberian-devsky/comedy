@@ -1,28 +1,31 @@
 'use client'
 
 import Image from "next/image"
+
 export default function Hero() {
-    return (
-        <div id='hero' className='w-full h-full relative mt-10'>
-            <Image
-                src='/club-marquis.png'
-                alt='Comedy Club Marquee'
-                fill
-                className='object-center blur-sm brightness-75'
-                priority
-            />
-            <div className='absolute inset-0 flex flex-col items-center justify-center text-center px-4 text-white z-10'>
-                <div className="relative w-full h-1/2">
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 text-white z-10">
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-yellow-400 drop-shadow-lg">
-                            i hate it here
-                        </h1>
-                        <p className="mt-4 text-base sm:text-lg md:text-xl text-white/30 max-w-sm sm:max-w-md md:max-w-xl drop-shadow-md">
-                            you might like it though
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
+  return (
+    <div className="relative w-full h-[600px] isolate">
+      {/* Background image */}
+      <Image
+        src="/club-marquis.png"
+        alt="Comedy Club Marquee"
+        fill
+        className="object-cover brightness-75"
+        priority
+      />
+
+      {/* Frosted glass / blur overlay */}
+      <div className="absolute inset-0 z-10 bg-black/10 backdrop-blur-sm" />
+
+      {/* Text Content */}
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 text-white">
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-yellow-400 drop-shadow-lg">
+          i hate it here
+        </h1>
+        <p className="mt-4 text-white/50 max-w-xl drop-shadow-md">
+          you might like it though
+        </p>
+      </div>
+    </div>
+  )
 }
