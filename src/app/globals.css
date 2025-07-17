@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,wdth@8..144,100..900,75..125');
 
 @theme {
-  --color-imdb: #F5C518;
-  --border-imdb: #F5C518;
-  --bg-imdb: #F5C518;
+  --color-icdb: #F5C518;
+  --border-icdb: #F5C518;
+  --bg-icdb: #F5C518;
 }
 
 html {

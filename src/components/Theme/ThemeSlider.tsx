@@ -32,7 +32,7 @@ export default function ThemeSlider() {
         'rounded-full',
         'cursor-pointer',
         'border-2',
-        'border-imdb',
+        'border-icdb',
         isDark ? 'bg-slate-800' : 'bg-white'
       )}
     >

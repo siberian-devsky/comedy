@@ -36,19 +36,19 @@ export default function AddCellModal( {setShowModal, setCells}: CellModalProps )
         const form = e.currentTarget;
         const name = form.name.valueOf() // Get name value
         const hometown = form.hometown.value.trim() // Get hometown value
-        const imdbProfile = form.imdbProfile.value.trim() // Get IMDB profile value
+        const icdbProfile = form.icdbProfile.value.trim() // Get icdb profile value
 
         const missing: string[] = []
         if (!name) missing.push('name field') // Validate name
         if (!hometown)  missing.push('icon field') // Validate hometown
-        if (!imdbProfile) missing.push('icon code field') // Validate IMDB profile
+        if (!icdbProfile) missing.push('icon code field') // Validate icdb profile
 
         if (missing.length > 0) {
             setOpStatus({ message: `missing: ${missing}`, status: 'nok' }) // Show validation errors
             return;
         }
 
-        createCell({ name, hometown, imdbProfile }); // Proceed with creation
+        createCell({ name, hometown, icdbProfile }); // Proceed with creation
     }
 
     return (
@@ -71,7 +71,7 @@ export default function AddCellModal( {setShowModal, setCells}: CellModalProps )
                     placeholder='Add an icon or emoji' 
                 />
                 <input 
-                    name='imdbProfile' 
+                    name='icdbProfile' 
                     type='text' 
                     className='w-full sm:w-3/4 h-8 sm:h-10 border-[3px] px-3 sm:px-4 border-pink-800 rounded-full text-sm sm:text-base' 
                     placeholder='Now add its code' 

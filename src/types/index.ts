@@ -1,3 +1,4 @@
+import React from "react"
 import { SetStateAction } from "react"
 
 export type CellData = {
@@ -10,8 +11,11 @@ export type CellData = {
 
 export type CellModalProps = {
     setShowModal: React.Dispatch<SetStateAction<boolean>>
-    setCells: React.Dispatch<SetStateAction<CellData[]>>
 }
+
+export type SetCellsProps = {
+  setCells: React.Dispatch<React.SetStateAction<CellData[]>>;
+};
 
 export type opStatus = {
     message: string | null

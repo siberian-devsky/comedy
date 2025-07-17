@@ -4,9 +4,8 @@ import Cell from '@/components/Cell';
 import CellModal from '@/components/Cell/modals/CellModal';
 import { CellData } from '@/types';
 import Header from '@/components/Header'
+import Hero from '@/components/Hero/Hero';
 import { useTheme } from 'next-themes';
-import Image from 'next/image';
-
 
 export default function Grid() {
     const [cells, setCells] = useState<CellData[]>([]) // Store comedy cell data
@@ -16,19 +15,28 @@ export default function Grid() {
     const {theme,} = useTheme()
     const isDarkMode = theme === 'dark' // Determine current theme
 
-    // Fetch comedy cells from backend API
+    // Fetch comedy cells from local or db
     useEffect(() => {
-        const fetchAllCells = async () => {
-            try {
-                const resp = await fetch('http://localhost:8080/api/v1/cells') // API endpoint for cells
-                const data = await resp.json()
-                setCells(data.data) // Update state with fetched data
-                localStorage.setItem('cache', JSON.stringify(data.data)) // Cache data locally
-            } catch (err) {
-                console.log("data: ", err)
+        const comedyCache = localStorage.getItem('comedyCache')
+        if (comedyCache) {
+            const cellarComics: CellData[] = JSON.parse(comedyCache)
+            setCells(cellarComics)
+            localStorage.removeItem('comedyCellar')
+        } else {
+            const fetchAllCells = async () => {
+                try {
+                    const resp = await fetch('http://localhost:8080/api/v1/cells/all') // API endpoint for cells
+                    const data = await resp.json()
+                    const comics = data.comics
+                    
+                    setCells(comics) // set view
+                    localStorage.setItem('comedyCache', JSON.stringify(comics)) // Cache data locally
+                } catch (err) {
+                    console.log("error: ", err)
+                }
             }
+            fetchAllCells()
         }
-        fetchAllCells()
     }, [setCells])
 
     // Prevent body scroll when modal is open
@@ -54,52 +62,37 @@ export default function Grid() {
 
     return(
         <main className="w-full h-full overflow-x-hidden flex flex-col items-center">
-            {/* Background image with blur effect */}
-            <div>
-                <Image
-                    src="/club-marquis.png"
-                    alt="Comedy Club Marquee"
-                    fill
-                    className="object-cover blur-[14px] brightness-75" // Apply blur and dimming effects
-                    priority
-                />
+            <div className='h-[50vh] w-full'>
+                <Hero />
             </div>
-            <div className="relative z-10 w-full"> {/* Content layer above background */}
-                <Header />
-                {/* Hero section with main title */}
-                <div className="relative w-full h-screen"> {/* Full viewport height hero */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-8 text-white">
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-yellow-400 drop-shadow-lg">
-                        i hate it here
-                        </h1>
-                        <p className="mt-4 text-base sm:text-lg md:text-xl text-white/30 max-w-sm sm:max-w-md md:max-w-xl drop-shadow-md">
-                        you might like it though
-                        </p>
-                    </div>
-                </div>
-                {/* Comedy cells container with responsive spacing */}
-                <div className="w-full px-4 sm:px-6 md:px-8 mt-16">
-                    <div
-                        id='comedyStack'
-                        className='w-full flex flex-col gap-24 sm:gap-32 md:gap-48' // Responsive gaps between cells
-                        >
-                        {/* Render comedy cells with alternating layout */}
-                        {cells !== null &&
-                            cells
-                                .filter((cell): cell is NonNullable<typeof cell> => cell !== null) // Filter out null cells
-                                .map((cell, index) => (
-                            <Cell
-                                key={cell.id}
-                                {...cell}
-                                isDarkMode={isDarkMode}
-                                isCellIndexEven={index % 2 === 0} // Alternate left/right alignment
-                                selectCellAndShowModal={() => {
-                                setSelectedCell(cell) // Set selected cell
-                                setShowCellModal(true) // Open modal
-                                }}
-                            />
-                        ))}
-                    </div>
+            <Header setCells={setCells}/>
+            {/* Comedy cells container with responsive spacing */}
+            <div className="w-full px-4 sm:px-6 md:px-8 mt-16">
+                <div
+                    id='comedyStack'
+                    className='w-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 
+                         gap-8 border-[1px] border-lime-400 p-16'
+                    >
+                    {/* render grid */}
+                    {cells.length > 0
+                        ? cells
+                        .filter((cell): cell is NonNullable<typeof cell> => cell !== null) // Filter out null cells
+                            .map((cell, index) => (
+                                <Cell
+                                    key={cell.id}
+                                    {...cell}
+                                    isDarkMode={isDarkMode}
+                                    isCellIndexEven={index % 2 === 0} // Alternate left/right alignment
+                                    selectCellAndShowModal={() => {
+                                    setSelectedCell(cell) // Set selected cell
+                                    setShowCellModal(true) // Open modal
+                                    }}
+                                />
+                            ))
+                        : <div className='w-full h-full text-9xl justify-center'>
+                            loading
+                        </div>
+                    }
                 </div>
             </div>
 

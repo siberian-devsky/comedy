@@ -39,7 +39,7 @@ export default function CellModal({
                         className='w-full sm:w-3/4 h-8 sm:h-10 border-[3px] px-3 sm:px-4 border-pink-800 rounded-full text-sm sm:text-base'
                         placeholder='Add an icon or emoji' />
                     <input
-                        defaultValue={selectedCell?.imdbProfile} // Pre-fill with current IMDB profile
+                        defaultValue={selectedCell?.imdbProfile} // Pre-fill with current icdb profile
                         name='iconCode'
                         type='text'
                         className='w-full sm:w-3/4 h-8 sm:h-10 border-[3px] px-3 sm:px-4 border-pink-800 rounded-full text-sm sm:text-base'

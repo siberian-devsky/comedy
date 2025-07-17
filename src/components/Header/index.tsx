@@ -1,28 +1,18 @@
 "use client";
-import clsx from 'clsx'
 import ThemeSlider from "../Theme/ThemeSlider";
+import ComicSearchForm from "./ComicSearchForm";
+import { SetCellsProps } from "@/types";
 
-export default function Header() {    
+export default function Header(
+     { setCells }: SetCellsProps
+) {    
     return (
         <header
         className="fixed top-0 left-0 z-50 bg-black/50
                 w-screen h-16 flex flex-row items-center justify-between
-                px-8 py-2 border-b-2 border-b-imdb"
+                px-8 py-2 border-b-2 border-b-icdb"
         > 
-            <form action="/api/v1/cells" onSubmit={ () => {} }>
-                <button
-                type='submit'
-                className={clsx(
-                    'cursor-pointer min-w-16 h-8 rounded-lg text-imdb border-2 border-imdb'
-                )}
-                >
-                    search
-                </button>
-                <input
-                    type='text'
-                    className='w-64 h-8 ml-4 px-2 rounded-lg border border-imdb
-                    focus:outline-none focus:ring-2 focus:ring-imdb focus:bg-imdb/25'/>
-            </form>
+            <ComicSearchForm setCells={setCells}/>
             <ThemeSlider />
         </header>
     );
