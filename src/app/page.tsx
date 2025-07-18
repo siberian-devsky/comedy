@@ -68,10 +68,6 @@ export default function Grid() {
                                         key={cell.id}
                                         {...cell}
                                         isCellIndexEven={i % 2 === 0}
-                                        selectCellAndShowModal={() => {
-                                            setSelectedCell(cell);
-                                            setShowCellModal(true);
-                                        }}
                                     />
                                 ))}
                         </div>
@@ -79,7 +75,7 @@ export default function Grid() {
                 </aside>
 
                 {/* Main Content (Right) */}
-                <section className="flex-1 h-full overflow-y-auto p-6">
+                <section className="flex-1 h-full overflow-y-auto p-6 border-2 border-emerald-400">
                     {/* Hero or other main content goes here */}
                     {/* <Hero /> */}
                     <div className="text-xl font-semibold text-gray-500">
