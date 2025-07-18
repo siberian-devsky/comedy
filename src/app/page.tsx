@@ -4,6 +4,7 @@ import Cell from '@/components/Cell';
 import CellModal from '@/components/Cell/modals/CellModal';
 import { CellData } from '@/types';
 import Header from '@/components/Header';
+import Hero from '@/components/Hero/Hero';
 
 export default function Grid() {
     const [cells, setCells] = useState<CellData[]>([]);
@@ -75,9 +76,8 @@ export default function Grid() {
                 </aside>
 
                 {/* Main Content (Right) */}
-                <section className="flex-1 h-full overflow-y-auto p-6 border-2 border-emerald-400">
-                    {/* Hero or other main content goes here */}
-                    {/* <Hero /> */}
+                <section className="flex-1 h-full overflow-y-auto p-6 border-2 border-red-600">
+                    <Hero />
                     <div className="text-xl font-semibold text-gray-500">
                         Select a comic from the sidebar to view details.
                     </div>
