@@ -4,12 +4,14 @@ import ThemeSlider from '../Theme/ThemeSlider';
 import ComicSearchForm from './ComicSearchForm';
 import { SetCellsProps } from '@/types';
 import clsx from 'clsx'
+import { useTheme } from 'next-themes';
 
 export default function Header(
      { setCells }: SetCellsProps
 ) {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [viewportWidth, setViewportWidth] = useState(0)
+    const {theme, } = useTheme()
 
     useEffect( () => {
         window.addEventListener('resize', onViewportChange)
@@ -32,10 +34,14 @@ export default function Header(
             <header
                 id='header'
                 className={clsx(
-                    'fixed top-0 left-0 z-50 bg-black/90',
+                    'fixed top-0 left-0 z-50',
                     'h-16 w-full flex flex-row',
                     'items-center justify-start',
-                    'p-4 border-b-2 border-b-icdb')}
+                    'p-4 border-b-2 border-b-icdb',
+                    theme === 'dark'
+                        ? 'bg-black'
+                        : 'bg-icdb'
+                )}
             > 
                 {viewportWidth <= 500 
                     ?   // smoosh header compoenents into toggle menu

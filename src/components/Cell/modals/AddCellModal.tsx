@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { CellData, CellModalProps, opStatus } from "@/types"
-import CloseButton from "./CloseButton";
+import { useState } from 'react';
+import { CellData, CellModalProps, opStatus } from '@/types'
+import CloseButton from './CloseButton';
 
 export default function AddCellModal( {setShowModal, setCells}: CellModalProps ) {
     const [opStatus, setOpStatus] = useState<opStatus>({ message: null, status: 'ok' }) // Track operation status
