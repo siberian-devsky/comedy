@@ -1,9 +1,18 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { SetCellsProps } from '@/types';
+import clsx from 'clsx';
+import { useTheme } from 'next-themes';
 
 export default function ComicSearchForm({ setCells }: SetCellsProps) {
     const [searchInput, setSearchInput] = useState('')
+    const [mounted, setMounted] = useState(false)
+    const [placeholder, setPlaceholder] = useState('Search ...')
+    const {theme, } = useTheme()
+    
+    useEffect( () => {
+        setMounted(true)
+    }, [])
 
     useEffect(() => {
         const searchHandler = (e: KeyboardEvent) => {
@@ -13,10 +22,19 @@ export default function ComicSearchForm({ setCells }: SetCellsProps) {
                 input?.focus()
             }
         }
-
+        
         window.addEventListener('keydown', searchHandler)
         return () => window.removeEventListener('keydown', searchHandler)
     }, [])
+
+    useEffect(() => {
+        if (!mounted) return;
+
+        if (typeof window === 'undefined') return;
+
+        const isMac = navigator.userAgent.toLowerCase().includes('mac');
+        setPlaceholder(isMac ? '⌘ + K to search...' : '⊞ + K to search...');
+    }, [mounted]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -28,7 +46,7 @@ export default function ComicSearchForm({ setCells }: SetCellsProps) {
         })
 
         if (res.status === 404) {
-            setCells([]) // return an empty case and let the client handle it
+            setCells([]) // return an empty list and let the client handle it
             return
         }
         
@@ -44,15 +62,25 @@ export default function ComicSearchForm({ setCells }: SetCellsProps) {
                 type='text'
                 value={searchInput}
                 onChange={ (e) => setSearchInput(e.target.value) }
-                className='w-1/2 h-8 px-2 rounded-lg border border-icdb grow md:grow-0
-                focus:outline-none focus:ring-2 focus:ring-icdb focus:bg-icdb/25'
-                placeholder='meta + k to search ...'
+                className={clsx(
+                    'w-1/2 h-8 px-2 rounded-lg border grow md:grow-0',
+                    'focus:outline-none focus:ring-2',
+                    theme === 'dark'
+                        ? 'bg-black text-icdb border-icdb focus:ring-icdb focus:bg-icdb/25'
+                        : 'bg-white text-black border-black focus:ring-black focus:bg-black/25'
+                )}
+                placeholder={placeholder}
             />
             <button
                 type='submit'
-                className='cursor-pointer min-w-16 h-8 rounded-lg text-icdb border-2 border-icdb ml-2'
+                className={clsx(
+                    'cursor-pointer min-w-16 h-8 rounded-lg border-2 border-icdb ml-2',
+                    theme === 'dark'
+                        ? 'bg-black text-icdb'
+                        : 'bg-white text-black'
+                )}
             >
-                FIND
+                find
             </button>
         </form>
     )   

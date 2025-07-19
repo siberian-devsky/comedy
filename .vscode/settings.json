@@ -185,7 +185,7 @@
         },
         {
             "tag": "//",
-            "color": "#474747", // {"color": "#474747"}
+            "color": "#474747", //// {"color": "#474747"}
             "strikethrough": true,
             "underline": false,
             "backgroundColor": "#transparent",
@@ -202,8 +202,8 @@
             "italic": false
         },
         {
-            "tag": "tip", // helpful timy code tips
-            "color": "#00eeaa", // tip {"color": "#00eeaa"}
+            "tag": ">", // helpful code tips
+            "color": "#00eeaa", //> {"color": "#00eeaa"}
             "strikethrough": false,
             "underline": false,
             "backgroundColor": "transparent",
@@ -212,12 +212,21 @@
         },
         {
             "tag": "?",
-            "color": "#00ff0088",
+            "color": "#00ff0088", //? {"color": "#00eeaa"}
             "strikethrough": false,
             "underline": false,
             "backgroundColor": "#ffffff22",
             "bold": false,
             "italic": false
-        }
-    ]
+        },
+    ],
+    // copy this to package.json for node projects
+    // "prettier": {
+    //     "trailingComma": "es5",
+    //     "tabWidth": 4,
+    //     "useTabs": true,
+    //     "semi": false,
+    //     "singleQuote": true,
+    //     "jsxSingleQuote": true
+    // }
 }

@@ -1,43 +1,42 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import ThemeSlider from '../Theme/ThemeSlider';
 import ComicSearchForm from './ComicSearchForm';
-import { SetCellsProps } from '@/types';
 import clsx from 'clsx'
+import { useTheme } from 'next-themes';
+import { CellData } from '@/types';
 
-export default function Header(
-     { setCells }: SetCellsProps
+type HeaderProps = {
+    setCells: Dispatch<SetStateAction<CellData[]>>
+    viewportWidth: number
+    setMobileMenuIsOpen: Dispatch<SetStateAction<boolean>>
+    mobileMenuIsOpen: boolean
+}
+
+export default function Header({
+    setCells,
+    viewportWidth,
+    setMobileMenuIsOpen,
+    mobileMenuIsOpen
+}: HeaderProps & {}
 ) {
-    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [viewportWidth, setViewportWidth] = useState(0)
-
-    useEffect( () => {
-        window.addEventListener('resize', onViewportChange)
-        onViewportChange()
-
-        return () => {
-            window.removeEventListener('resize', onViewportChange)
-        }
-    })
-
-    function onViewportChange() {
-        const measuredViewportWidth = window.innerWidth
-        setViewportWidth(measuredViewportWidth)
-
-        if (viewportWidth >= 500 ) setMobileMenuOpen(false)
-    }
+    const {theme, } = useTheme()
 
     return (
         <>
             <header
                 id='header'
                 className={clsx(
-                    'fixed top-0 left-0 z-50 bg-black/90',
+                    'fixed top-0 left-0 z-50',
                     'h-16 w-full flex flex-row',
                     'items-center justify-start',
-                    'p-4 border-b-2 border-b-icdb')}
+                    'p-4 border-b-2 border-b-icdb',
+                    theme === 'dark'
+                        ? 'bg-black'
+                        : 'bg-icdb'
+                )}
             > 
-                {viewportWidth <= 500 
+                {viewportWidth <= 430 
                     ?   // smoosh header compoenents into toggle menu
                         <div className={clsx(
                             'w-full flex flex-row',
@@ -47,16 +46,17 @@ export default function Header(
                         >
                             <button
                                 id='menuToggle'
-                                onClick={ () => setMobileMenuOpen( (prev) => !prev ) }
+                                onClick={ () => setMobileMenuIsOpen( (prev) => !prev ) }
                                 className={clsx(
                                 'w-8 aspect-square rounded-2xl',
-                                'font-bold cursor-pointer',
-                                'bg-green-400/20 text-green-400/40',
-                                !isMobileMenuOpen && '-rotate-[22.5deg] duration-700',
-                                isMobileMenuOpen && 'text-green-400/100 duration-700'
+                                'font-bold cursor-pointer border',
+                                'bg-green-400',
+                                theme === 'dark' ? 'text-white border-white' : 'text-black border border-black',
+                                !mobileMenuIsOpen && '-rotate-[22.5deg] duration-700',
+                                mobileMenuIsOpen && 'bg-red-400 duration-700'
                             )}
                             >
-                                {isMobileMenuOpen ? 'X' : '?'}
+                                {mobileMenuIsOpen ? 'X' : '?'}
                             </button>
                         </div>
                     :   // else show the full menu
@@ -74,7 +74,7 @@ export default function Header(
                 'flex flex-col gap-2 items-center',
                 'bg-slate-900/70',
                 'transition-all duration-300 ease-in-out',
-                isMobileMenuOpen && viewportWidth < 500
+                mobileMenuIsOpen && viewportWidth <= 430
                     ? 'opacity-100 translate-y-16 pointer-events-auto'
                     : 'opacity-0 translate-y-0 pointer-events-none'
             )}
