@@ -1,10 +1,16 @@
 'use client'
-import { useState, useEffect } from 'react';
-import { SetCellsProps } from '@/types';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { CellData } from '@/types';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 
-export default function ComicSearchForm({ setCells }: SetCellsProps) {
+type SearchProps = {
+    setCells: Dispatch<SetStateAction<CellData>>
+}
+
+export default function ComicSearchForm({
+    setCells
+}: SearchProps) {
     const [searchInput, setSearchInput] = useState('')
     const [mounted, setMounted] = useState(false)
     const [placeholder, setPlaceholder] = useState('Search ...')

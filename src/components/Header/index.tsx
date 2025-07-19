@@ -7,7 +7,7 @@ import { useTheme } from 'next-themes';
 import { CellData } from '@/types';
 
 type HeaderProps = {
-    setCells: Dispatch<SetStateAction<CellData[]>>
+    setCells: Dispatch<SetStateAction<CellData>>
     viewportWidth: number
     setMobileMenuIsOpen: Dispatch<SetStateAction<boolean>>
     mobileMenuIsOpen: boolean
@@ -37,10 +37,10 @@ export default function Header({
                 )}
             > 
                 {viewportWidth <= 430 
-                    ?   // smoosh header compoenents into toggle menu
+                    ?   // smoosh header components into toggle menu
                         <div className={clsx(
                             'w-full flex flex-row',
-                            'items-center justify-start',
+                            'items-center justify-end',
                             'text-xl',
                             )}
                         >

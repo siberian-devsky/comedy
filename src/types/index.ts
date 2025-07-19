@@ -13,10 +13,6 @@ export type CellModalProps = {
     setShowModal: React.Dispatch<SetStateAction<boolean>>
 }
 
-export type SetCellsProps = {
-  setCells: React.Dispatch<React.SetStateAction<CellData[]>>;
-};
-
 export type opStatus = {
     message: string | null
     status: 'ok' | 'nok'
