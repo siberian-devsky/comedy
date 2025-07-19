@@ -39,7 +39,7 @@ export default function ThemeSlider() {
                         'rounded-full',
                         isDark
                             ? 'bg-white translate-x-1 duration-200 ease-in'
-                            : 'bg-black translate-x-[260%] scale-125 duration-200 ease-in'
+                            : 'bg-black translate-x-[230%] scale-125 duration-200 ease-in'
                     )}
                 ></div>
             </div>

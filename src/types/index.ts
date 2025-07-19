@@ -7,7 +7,7 @@ export type CellData = {
   hometown:    string
   imdbProfile: string
   updated: Date
-} | null
+}[] | null
 
 export type CellModalProps = {
     setShowModal: React.Dispatch<SetStateAction<boolean>>
