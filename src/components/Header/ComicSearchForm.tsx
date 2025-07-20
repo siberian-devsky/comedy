@@ -9,7 +9,7 @@ type SearchProps = {
 }
 
 export default function ComicSearchForm({
-    setCells
+    setCells,
 }: SearchProps) {
     const [searchInput, setSearchInput] = useState('')
     const [mounted, setMounted] = useState(false)
@@ -22,10 +22,13 @@ export default function ComicSearchForm({
 
     useEffect(() => {
         const searchHandler = (e: KeyboardEvent) => {
+            if (typeof e.key !== 'string') return
             if (e.key.toLowerCase() === 'k' && e.metaKey) {
                 e.preventDefault()
-                const input = document.querySelector('#comicSearchForm') as HTMLInputElement
-                input?.focus()
+                // resize search bar on focus
+                const comicSearchForm = document.querySelector('#comicSearchForm') as HTMLInputElement
+                comicSearchForm?.classList.add('w-72', 'transition-all', 'duration-300', 'ease-in')
+                comicSearchForm?.focus()
             }
         }
         
@@ -39,7 +42,7 @@ export default function ComicSearchForm({
         if (typeof window === 'undefined') return;
 
         const isMac = navigator.userAgent.toLowerCase().includes('mac');
-        setPlaceholder(isMac ? '⌘ + K to search...' : '⊞ + K to search...');
+        setPlaceholder(isMac ? '⌘K' : '⊞K');
     }, [mounted]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -52,7 +55,7 @@ export default function ComicSearchForm({
         })
 
         if (res.status === 404) {
-            setCells([]) // return an empty list and let the client handle it
+            setCells([])
             return
         }
         
@@ -61,7 +64,9 @@ export default function ComicSearchForm({
     }
     
     return (
-        <form className='w-full flex flex-row' 
+        <form id='formContainer' className={clsx(
+            'w-36 md:w-56 lg:w-[350px] flex flex-row'
+        )} 
             onSubmit={handleSubmit}>
             <input
                 id='comicSearchForm'
@@ -69,7 +74,7 @@ export default function ComicSearchForm({
                 value={searchInput}
                 onChange={ (e) => setSearchInput(e.target.value) }
                 className={clsx(
-                    'w-1/2 h-8 px-2 rounded-lg border grow md:grow-0',
+                    'h-8 px-2 rounded-lg border grow md:grow-0',
                     'focus:outline-none focus:ring-2',
                     theme === 'dark'
                         ? 'bg-black text-icdb border-icdb focus:ring-icdb focus:bg-icdb/25'

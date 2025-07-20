@@ -1,87 +1,107 @@
-'use client';
-import { Dispatch, SetStateAction } from 'react';
-import ThemeSlider from '../Theme/ThemeSlider';
-import ComicSearchForm from './ComicSearchForm';
+'use client'
+import { Dispatch, SetStateAction, useEffect } from 'react'
+import ThemeSlider from '../Theme/ThemeSlider'
+import ComicSearchForm from './ComicSearchForm'
 import clsx from 'clsx'
-import { useTheme } from 'next-themes';
-import { CellData } from '@/types';
+import { useTheme } from 'next-themes'
+import { CellData } from '@/types'
+import { BarricietoFontClass, MOBILE_DEVICE_SM } from '@/lib/config'
 
 type HeaderProps = {
-    setCells: Dispatch<SetStateAction<CellData>>
+	setCells: Dispatch<SetStateAction<CellData>>
+	isMobileDevice: boolean
+	mobileMenuIsOpen: boolean
+	setMobileMenuIsOpen: Dispatch<SetStateAction<boolean>>
     viewportWidth: number
-    setMobileMenuIsOpen: Dispatch<SetStateAction<boolean>>
-    mobileMenuIsOpen: boolean
 }
 
 export default function Header({
-    setCells,
-    viewportWidth,
-    setMobileMenuIsOpen,
-    mobileMenuIsOpen
-}: HeaderProps & {}
-) {
-    const {theme, } = useTheme()
+	setCells,
+	isMobileDevice,
+	mobileMenuIsOpen,
+	setMobileMenuIsOpen,
+    viewportWidth
+}: HeaderProps & {}) {
+	const { theme } = useTheme()
+    console.debug(`isMobileDevice: ${isMobileDevice}`)
+    console.debug(`mobileMenuIsOpen: ${mobileMenuIsOpen}`)
+    console.debug('\n');
 
-    return (
-        <>
-            <header
-                id='header'
-                className={clsx(
-                    'fixed top-0 left-0 z-50',
-                    'h-16 w-full flex flex-row',
-                    'items-center justify-start',
-                    'p-4 border-b-2 border-b-icdb',
-                    theme === 'dark'
-                        ? 'bg-black'
-                        : 'bg-icdb'
-                )}
-            > 
-                {viewportWidth <= 430 
-                    ?   // smoosh header components into toggle menu
-                        <div className={clsx(
-                            'w-full flex flex-row',
-                            'items-center justify-end',
-                            'text-xl',
-                            )}
-                        >
-                            <button
-                                id='menuToggle'
-                                onClick={ () => setMobileMenuIsOpen( (prev) => !prev ) }
-                                className={clsx(
-                                'w-8 aspect-square rounded-2xl',
-                                'font-bold cursor-pointer border',
-                                'bg-green-400',
-                                theme === 'dark' ? 'text-white border-white' : 'text-black border border-black',
-                                !mobileMenuIsOpen && '-rotate-[22.5deg] duration-700',
-                                mobileMenuIsOpen && 'bg-red-400 duration-700'
-                            )}
-                            >
-                                {mobileMenuIsOpen ? 'X' : '?'}
-                            </button>
-                        </div>
-                    :   // else show the full menu
-                        <div className={clsx(
-                            'w-full flex flex-row justify-between'
-                        )}>
-                            <ComicSearchForm setCells={setCells} />
-                            <ThemeSlider />
-                        </div>
-                }
-            </header>
-            {/* mobile menu */}
-            <div className={clsx(
-                'fixed z-40 top-0 left-0 w-full h-auto p-4',
-                'flex flex-col gap-2 items-center',
-                'bg-slate-900/70',
-                'transition-all duration-300 ease-in-out',
-                mobileMenuIsOpen && viewportWidth <= 430
-                    ? 'opacity-100 translate-y-16 pointer-events-auto'
-                    : 'opacity-0 translate-y-0 pointer-events-none'
+    useEffect(() => {
+        // guarantee that the menu wont reopen when back in mobile mode
+        if (!isMobileDevice && mobileMenuIsOpen) setMobileMenuIsOpen(false)
+        
+    }, [isMobileDevice, mobileMenuIsOpen]); 
+
+	return (
+		<div>
+			<header
+				id='header'
+				className={clsx(
+					'fixed top-0 left-0 z-50',
+					'h-16 w-full flex flex-row',
+					'items-center justify-start',
+					'p-4 border-b-2 border-b-icdb',
+					theme === 'dark' ? 'bg-black' : 'bg-icdb'
+				)}
+			>
+                {/*//> //smoosh header components into toggle menu */}
+				{isMobileDevice
+                    ?
+					<div
+						className={clsx(
+							'w-full flex flex-row',
+							'items-center justify-end',
+							'text-xl'
+						)}
+					>
+						<button
+							id='menuToggle'
+							onClick={() => setMobileMenuIsOpen((prev) => !prev)}
+							className={clsx(
+                                `${BarricietoFontClass}`,
+								'w-12 h-8 rounded-lg',
+								'font-bold cursor-pointer border',
+                                'bg-transparent text-2xl',
+                                'transition-transform duration-300 ease-in-out',
+                                theme === 'dark'
+                                    ? 'text-icdb border-icdb'
+                                    : 'text-black border-black',
+								mobileMenuIsOpen ? 'rotate-180' : 'rotate-0'
+							)}
+						>  
+							?
+						</button>
+					</div>
+				:
+					// else show the full menu
+					<div
+						className={clsx('w-full flex flex-row justify-between')}
+					>
+						<ComicSearchForm setCells={setCells} />
+						<ThemeSlider />
+					</div>
+				}
+			</header>
+            
+			{/* //> mobile menu */}
+            {isMobileDevice && mobileMenuIsOpen && (
+                <div
+                    className={clsx(
+                        'flex left-0 w-full h-auto p-4',
+                        'bg-slate-900/70',
+                        'transition-transform duration-300 ease-in-out',
+                        viewportWidth < MOBILE_DEVICE_SM
+                            ? 'flex-col justify-center'
+                            : 'flex-row justify-between items-center',
+                        'opacity-100 translate-y-16 pointer-events-auto'
+                    )}
+                >
+                    <ComicSearchForm setCells={setCells} />
+                    <ThemeSlider />
+                </div>
             )}
-            >
-                <ComicSearchForm setCells={setCells} />
-                <ThemeSlider />
-            </div>
-        </>
-    )
+
+		</div>
+	)
 }

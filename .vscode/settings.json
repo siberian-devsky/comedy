@@ -58,7 +58,7 @@
     "terminal.external.windowsExec": "/mnt/c/Windows/System32/cmd.exe",
     "isort.check": true,
     "editor.tokenColorCustomizations": {
-        "comments": "#e37777"
+        "comments": "#ff5900",
     },
     "editor.fontSize": 16,
     "vscode-postgres.showExplorer": true,
@@ -208,7 +208,7 @@
             "underline": false,
             "backgroundColor": "transparent",
             "bold": false,
-            "italic": false
+            "italic": true
         },
         {
             "tag": "?",
@@ -220,7 +220,7 @@
             "italic": false
         },
     ],
-    // copy this to package.json for node projects
+    // copy this to package.json for all projects
     // "prettier": {
     //     "trailingComma": "es5",
     //     "tabWidth": 4,

@@ -30,7 +30,10 @@ export default function ThemeSlider() {
             )}
         >
             {/* pill container*/}
-            <div className={clsx('w-full flex flex-row items-center justify-start')}>
+            <div className={clsx(
+                'w-full flex flex-row items-center justify-start',
+                'min-w-[42px]', //! prevent pill squish on
+            )}>
                 {/* toggle dot */}
                 <div
                     className={clsx(
@@ -39,7 +42,7 @@ export default function ThemeSlider() {
                         'rounded-full',
                         isDark
                             ? 'bg-white translate-x-1 duration-200 ease-in'
-                            : 'bg-black translate-x-[230%] scale-125 duration-200 ease-in'
+                            : 'bg-black translate-x-[230%] scale-110 duration-200 ease-in'
                     )}
                 ></div>
             </div>

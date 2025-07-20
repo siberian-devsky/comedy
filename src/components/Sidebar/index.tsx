@@ -1,97 +1,107 @@
 'use client'
-import { useState, useEffect, Dispatch, SetStateAction } from 'react';
-import { CellData } from "@/types"
+import { useState, useEffect, Dispatch, SetStateAction } from 'react'
+import { CellData } from '@/types'
+import { useTheme } from 'next-themes'
 import Cell from '@/components/Cell'
 import clsx from 'clsx'
 
-
 type SidebarProps = {
-    // sidebarIsOpen: boolean
-    // setSidebarIsOpen: Dispatch<SetStateAction<boolean>>
-    // dataLoading: boolean
-    // setDataLoading: Dispatch<SetStateAction<boolean>>
-    cells: CellData
-    setCells: Dispatch<SetStateAction<CellData>>
+	cells: CellData
+	setCells: Dispatch<SetStateAction<CellData>>
+	isMobileDevice: boolean
+	setSidebarIsOpen: Dispatch<SetStateAction<boolean>>
+	mobileMenuIsOpen: boolean
 }
 
 export default function Sidebar({
-    cells,
-    setCells
+	cells,
+	setCells,
+	isMobileDevice,
+	setSidebarIsOpen,
+	mobileMenuIsOpen,
 }: SidebarProps) {
-    const [dataLoading, setDataLoading] = useState(false)
-    const [sidebarIsOpen, setSidebarIsOpen] = useState(true) // default to desktop
-    
-    // Fetch data
-    useEffect(() => {
-        setDataLoading(true)
-        const cache = localStorage.getItem('cache')
-        if (cache) {
-            setCells(JSON.parse(cache))
-            setDataLoading(false)
-        } else {
-            (async () => {
-                try {
-                    const res = await fetch(
-                        'http://localhost:8080/api/v1/cells/all'
-                    )
-                    const data = await res.json()
-                    setCells(data.comics)
-                    localStorage.setItem('cache', JSON.stringify(data.comics))
-                } catch (err) {
-                    console.error('fetch error:', err)
-                } finally {
-                    setDataLoading(false)
-                }
-            })()
-        }
-    }, [setCells])
+	const [dataLoading, setDataLoading] = useState(false)
+	const { theme } = useTheme()
 
-    return (
-        <div className='grid grid-flow-col grid-rows-4'>
-            <aside className={clsx(
-                'row-span-4 h-full overflow-y-auto',
-                'transition-all duration-300 ease-in',
-                sidebarIsOpen
-                    ? 'w-36 md:w-56 lg:w-[350px]'
-                    : 'w-0'
-                )}>
-                    
-                {/* loading message */}
+	// Fetch data
+	useEffect(() => {
+		setDataLoading(true)
+		console.log(isMobileDevice)
+		const cache = localStorage.getItem('cache')
+		if (cache) {
+			setCells(JSON.parse(cache))
+			setDataLoading(false)
+		} else {
+			;(async () => {
+				try {
+					const res = await fetch(
+						'http://localhost:8080/api/v1/cells/all'
+					)
+					const data = await res.json()
+					setCells(data.comics)
+					localStorage.setItem('cache', JSON.stringify(data.comics))
+				} catch (err) {
+					console.error('fetch error:', err)
+				} finally {
+					setDataLoading(false)
+				}
+			})()
+		}
+	}, [setCells, isMobileDevice])
+
+	return (
+        //> sidebar container */}
+		<div
+			className={clsx(
+				'absolute z-30 bg-black/70','h-full overflow-y-auto',
+				'flex flex-row',
+				'w-36 md:w-56 lg:w-[350px]',
+				'transition-all duration-300 ease-in',
+				isMobileDevice && !mobileMenuIsOpen
+					? 'translate-x-0'
+					: '-translate-x-full'
+			)}
+		>
+            <aside
+                id='sidebarContainer'
+            >
+                {/*//> loading message */}
                 {dataLoading && (
                     <div className='w-full h-full flex items-center justify-center'>
                         <span>Loading...</span>
                     </div>
                 )}
-                
-                {/* degenerate cards */}
-                { (cells && !dataLoading) && (
+
+                {/*//> degenerate cards */}
+                {cells && !dataLoading && (
                     <div
                         id='comedyStack'
                         className='flex flex-col items-center gap-8 p-4 translate-y-20'
                     >
-                        {cells
-                            // .filter((cell) => )
-                            .map((cell) => (
-                                <Cell key={cell.id} {...cell} />
-                            ))}
+                        {cells.map((cell) => (
+                            <Cell key={cell.id} {...cell} />
+                        ))}
                     </div>
                 )}
             </aside>
-            
-            {/* pull tab */}
-            <button
-                className={clsx(
-                    'row-span-1 w-10 h-48',
-                    'flex flex-row items-center justify-center',
-                    'bg-black/60 text-icdb',
-                )}
-                onClick={() => setSidebarIsOpen( (prev) => !prev)}
-            >
-                <div className='rotate-90 brightness-50'>degenerates</div>
-            </button>
 
-            {/* dummy transparent rows to show main content underneath */}
-            <div className='row-span-3 bg-transparent'></div>
+            {/*//> pull tab */}
+            <div>
+                <button
+                    className={clsx(
+                        'w-10 h-full',
+                        'flex flex-row items-start justify-center',
+                        theme === 'dark'
+                            ? 'bg-icdb text-black'
+                            : 'bg-black text-icdb'
+                    )}
+                    onClick={() => setSidebarIsOpen((prev) => !prev)}
+                >
+                    <div className='brightness-50 rotate-90 translate-y-48'>
+                        degenerates
+                    </div>
+                </button>
+            </div>
         </div>
     )
 }

@@ -5,69 +5,42 @@ import { CellData } from '@/types'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero/Hero'
 import Sidebar from '@/components/Sidebar'
+import { MOBILE_MENU_THRESHOLD } from '@/lib/config'
 
 export default function Grid() {
 	const [cells, setCells] = useState<CellData>([])
 	const [showCellModal, setShowCellModal] = useState(false)
-	const [selectedCell, ] = useState<CellData>(null)
-	// const [dataLoading, setDataLoading] = useState(false)
-	const [viewportWidth, setViewportWidth] = useState(0)
-	const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false) // default to desktop
-	const [sidebarIsOpen, setSidebarIsOpen] = useState(true) // default to desktop
+	const [selectedCell] = useState<CellData>(null)
+	const [viewportWidth, setViewportWidth] = useState(
+		MOBILE_MENU_THRESHOLD + 1
+	) // expand all the expandables ☠️
+	const [isMobileDevice, setIsMobileDevice] = useState(false) // default to desktop
+	const [sidebarIsOpen, setSidebarIsOpen] = useState(true)
+	const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
 	const [mounted, setMounted] = useState(false)
 
-	useEffect( () => {
+	useEffect(() => {
 		setMounted(true)
-	},[])
-	
-	// Fetch data
-	// useEffect(() => {
-	// 	setDataLoading(true)
-	// 	const cache = localStorage.getItem('cache')
-	// 	if (cache) {
-	// 		setCells(JSON.parse(cache))
-	// 		setDataLoading(false)
-	// 	} else {
-	// 		(async () => {
-	// 			try {
-	// 				const res = await fetch(
-	// 					'http://localhost:8080/api/v1/cells/all'
-	// 				)
-	// 				const data = await res.json()
-	// 				setCells(data.comics)
-	// 				localStorage.setItem('cache', JSON.stringify(data.comics))
-	// 			} catch (err) {
-	// 				console.error('fetch error:', err)
-	// 			} finally {
-	// 				setDataLoading(false)
-	// 			}
-	// 		})()
-	// 	}
-	// }, [])
-	
+	}, [])
+
 	// master event handler for responsiveness
-	//? is this the right way to do this?
-	useEffect( () => {
+	useEffect(() => {
 		window.addEventListener('resize', onViewportChange)
-		// onViewportChange()
-		
+		onViewportChange()
+
 		function onViewportChange() {
 			const measuredViewportWidth = window.innerWidth
 			setViewportWidth(measuredViewportWidth)
-			console.log(viewportWidth);
-			
-			if (viewportWidth <= 430) { // hide on mobile
-				setSidebarIsOpen(false)
-			} else {
-				setSidebarIsOpen(true)
-			}
+
+			//! THIS SHOULE ONLY BE SET HERE
+			setIsMobileDevice(viewportWidth < MOBILE_MENU_THRESHOLD)
 		}
-		
+
 		return () => {
 			window.removeEventListener('resize', onViewportChange)
 		}
-	},[viewportWidth])
-	
+	}, [viewportWidth])
+
 	// punch out to prevent hydration mismatch
 	if (!mounted) return null
 
@@ -75,40 +48,24 @@ export default function Grid() {
 		<div className='flex flex-col h-screen w-full overflow-hidden'>
 			<Header
 				setCells={setCells}
-				viewportWidth={viewportWidth}
-				setMobileMenuIsOpen={setMobileMenuIsOpen}
 				mobileMenuIsOpen={mobileMenuIsOpen}
+				setMobileMenuIsOpen={setMobileMenuIsOpen}
+				isMobileDevice={isMobileDevice}
+				viewportWidth={viewportWidth}
 			/>
 
 			<main className='flex flex-row h-full w-full overflow-hidden'>
-				{/* Sidebar (Left) */}
-				{sidebarIsOpen && 
-					<Sidebar 
-						cells={cells}
-						setCells={setCells}
-					/>
-					// <aside className='w-1/4 min-w-[300px] max-w-[400px] h-full overflow-y-auto border-r border-gray-200'>
-					// 	{dataLoading ? (
-					// 		<div className='w-full h-full flex items-center justify-center'>
-					// 			<span>Loading...</span>
-					// 		</div>
-					// 	) : (
-					// 		<div
-					// 			id='comedyStack'
-					// 			className='flex flex-col items-center gap-8 p-4 translate-y-20'
-					// 		>
-					// 			{cells
-					// 				.filter((cell): cell is CellData => !!cell)
-					// 				.map((cell) => (
-					// 					<Cell key={cell.id} {...cell} />
-					// 				))}
-					// 		</div>
-					// 	)}
-					// </aside>
-				}
+				{/* sidebar */}
+				{/* <Sidebar
+					cells={cells}
+					setCells={setCells}
+					isMobileDevice={isMobileDevice}
+					mobileMenuIsOpen={mobileMenuIsOpen}
+					setSidebarIsOpen={setSidebarIsOpen}
+				/> */}
 
-				{/* Main Content (Right) */}
-				<section className='flex-1 h-full overflow-y-auto'>
+				{/* main content */}
+				<section className='flex-1 h-fulloverflow-y-auto'>
 					<Hero />
 				</section>
 			</main>
