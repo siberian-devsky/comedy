@@ -65,7 +65,7 @@ export default function ComicSearchForm({
     
     return (
         <form id='formContainer' className={clsx(
-            'w-36 md:w-56 lg:w-[350px] flex flex-row'
+            'w-36 md:w-56 lg:w-[350px] h-auto flex flex-row'
         )} 
             onSubmit={handleSubmit}>
             <input

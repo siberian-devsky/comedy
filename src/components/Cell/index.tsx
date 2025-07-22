@@ -1,5 +1,6 @@
 'use client'
 import clsx from 'clsx'
+import { useState, useEffect } from 'react'
 
 export default function Cell({
 	id,
@@ -10,6 +11,14 @@ export default function Cell({
 	name: string
 	// getUpOnStage: () => void
 }) {
+	const [mounted, setMounted] = useState(false)
+	
+	useEffect(() => {
+		setMounted(true)
+	}, [])
+
+	if (!mounted) return
+		
 	return (
 		<div
 			id={id.toString()}

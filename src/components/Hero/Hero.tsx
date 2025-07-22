@@ -1,34 +1,44 @@
 'use client'
 
 // import Image from 'next/image'
+import { useState, useEffect } from 'react';
 import clsx from 'clsx'
 import { BarricietoFontClass } from '@/lib/config';
 import { useTheme } from 'next-themes';
-
+import Image from 'next/image';
 export default function Hero() {
 	const {theme, } = useTheme()
+	const [mounted, setMounted] = useState(false)
+	
+	useEffect(() => {
+		setMounted(true)
+	}, [])
+
+	if (!mounted) return
+	
 	return (
-		<div className='relative w-full h-full isolate'>
-			{/* Background image */}
-			{/* <Image
+		// size, position etc set by parent
+		<div>
+			{/*//> Background image */}
+			<Image
 				src='/club-marquis.png'
 				alt='Comedy Club Marquee'
 				fill
 				className='object-cover brightness-75'
 				priority
-			/> */}
+			/>
 
-			{/* Frosted glass / blur overlay */}
-			{/* <div className='absolute inset-0 z-10 bg-black/10 backdrop-blur-sm' /> */}
+			{/*//> Frosted glass / blur overlay */}
+			<div className='absolute inset-0 z-10 bg-black/10 backdrop-blur-sm' />
 
-			{/* Text Content */}
+			{/*//> Text Content */}
 			<div className={clsx(
 				`${BarricietoFontClass}`,
 				'absolute inset-0 z-20 flex flex-col items-center',
 				'justify-center text-center px-4 text-white'
 			)}>
 				<h1 className={clsx(
-					'text-4xl sm:text-5xl: md:text-8xl font-extrabold',
+					'text-6xl md:text-9xl',
 					'text-yellow-400 drop-shadow-lg'
 					)}>
 					i hate it here

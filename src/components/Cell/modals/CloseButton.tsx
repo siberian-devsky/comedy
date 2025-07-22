@@ -6,7 +6,7 @@ export default function CloseButton({ setShowModal }: CloseButtonProps) {
 	return (
 		<div className='min-w-20 absolute top-3 left-3 group flex flex-row gap-1 items-center '>
 			<button
-				className='w-6 h-6 bg-pink-500 text-black cursor-pointer
+				className='w-6 h-auto bg-pink-500 text-black cursor-pointer
                            flex items-center justify-center opacity-80 rounded-full'
 				onClick={() => setShowModal(false)}
 			>
