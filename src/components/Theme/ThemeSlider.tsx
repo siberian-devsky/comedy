@@ -33,7 +33,7 @@ export default function ThemeSlider() {
 			<div
 				className={clsx(
 					'w-full flex flex-row items-center justify-start',
-					'min-w-[42px]' //! prevent pill squish on
+					'min-w-[42px]' //! prevent pill squish on mobile
 				)}
 			>
 				{/* toggle dot */}

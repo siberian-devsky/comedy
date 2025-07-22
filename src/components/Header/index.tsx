@@ -4,12 +4,12 @@ import ThemeSlider from '../Theme/ThemeSlider'
 import ComicSearchForm from './ComicSearchForm'
 import clsx from 'clsx'
 import { useTheme } from 'next-themes'
-import { CellData } from '@/types'
+import { ComicData } from '@/types'
 import { BarricietoFontClass } from '@/lib/config'
 
 type HeaderProps = {
-	setCells: Dispatch<SetStateAction<CellData>>
-	isMobileDevice: boolean
+	setCells: Dispatch<SetStateAction<ComicData>>
+	deviceIsMobile: boolean
 	mobileMenuIsOpen: boolean
 	setMobileMenuIsOpen: Dispatch<SetStateAction<boolean>>
 	viewportWidth: number
@@ -17,7 +17,7 @@ type HeaderProps = {
 
 export default function Header({
 	setCells,
-	isMobileDevice,
+	deviceIsMobile,
 	mobileMenuIsOpen,
 	setMobileMenuIsOpen,
 }: HeaderProps & {}) {
@@ -30,8 +30,8 @@ export default function Header({
 
 	useEffect(() => {
 		// guarantee that the menu wont reopen when back in mobile mode
-		if (!isMobileDevice && mobileMenuIsOpen) setMobileMenuIsOpen(false)
-	}, [isMobileDevice, mobileMenuIsOpen])
+		if (!deviceIsMobile && mobileMenuIsOpen) setMobileMenuIsOpen(false)
+	}, [deviceIsMobile, mobileMenuIsOpen])
 
 	if (!mounted) return
 
@@ -45,7 +45,7 @@ export default function Header({
 			)}
 		>
 			{/*//> //smoosh header components into toggle menu */}
-			{isMobileDevice ? (
+			{deviceIsMobile ? (
 				<div
 					className={clsx(
 						'w-full flex flex-row',
@@ -79,14 +79,14 @@ export default function Header({
 			)}
 
 			{/* //> mobile menu */}
-			{isMobileDevice && mobileMenuIsOpen && (
+			{deviceIsMobile && mobileMenuIsOpen && (
 				<div
 					className={clsx(
 						'absolute z-50 left-0 w-full h-auto p-4',
 						'bg-slate-900/70',
 						'transition-all duration-300 ease-in-out',
 						'opacity-100 translate-y-16',
-						isMobileDevice
+						deviceIsMobile
 							? 'w-0 -translate-y-full'
 							: 'w-48 translate-x-0'
 					)}

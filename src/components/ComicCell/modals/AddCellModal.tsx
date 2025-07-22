@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { CellData, CellModalProps, opStatus } from '@/types'
+import { ComicData, CellModalProps, opStatus } from '@/types'
 import CloseButton from './CloseButton';
 
 export default function AddCellModal( {setShowModal, setCells}: CellModalProps ) {
     const [opStatus, setOpStatus] = useState<opStatus>({ message: null, status: 'ok' }) // Track operation status
 
     // Create new cell via backend API
-    const createCell = async(data: Omit<CellData, 'id'|'updated'>) => {
+    const createCell = async(data: Omit<ComicData, 'id'|'updated'>) => {
         try {
             const resp = await fetch('http://localhost:8080/api/v1/cells/create', { // API endpoint for creation
                 method: 'POST',
@@ -14,14 +14,14 @@ export default function AddCellModal( {setShowModal, setCells}: CellModalProps )
                 body: JSON.stringify(data),
             })
 
-            const cellData = await resp.json()
+            const ComicData = await resp.json()
 
             if (!resp.ok) {
                 setOpStatus({ message: 'This cell already exists', status: 'nok' }) // Handle duplicate error
             } else {
-                setOpStatus({ message: `${cellData.data.name} created`, status: 'ok' }) // Success message
-                setCells(prev => [...prev, cellData.data]) // Add to local state
-                localStorage.setItem('cache', JSON.stringify(cellData.data)) // Update cache
+                setOpStatus({ message: `${ComicData.data.name} created`, status: 'ok' }) // Success message
+                setCells(prev => [...prev, ComicData.data]) // Add to local state
+                localStorage.setItem('cache', JSON.stringify(ComicData.data)) // Update cache
             }
 
         } catch (err) {

@@ -1,9 +1,9 @@
 import { SetStateAction } from 'react'
-import { CellData } from '@/types'
+import { ComicData } from '@/types'
 import CloseButton from './CloseButton'
 
 type CellModalProps = {
-	selectedComic: CellData
+	selectedComic: ComicData
 	setShowModal: React.Dispatch<SetStateAction<boolean>>
 }
 

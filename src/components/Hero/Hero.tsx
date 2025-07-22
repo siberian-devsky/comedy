@@ -18,39 +18,44 @@ export default function Hero() {
 	
 	return (
 		// size, position etc set by parent
-		<div>
+		// <div>
+			<div className='relative w-full h-full'>
 			{/*//> Background image */}
-			<Image
-				src='/club-marquis.png'
-				alt='Comedy Club Marquee'
-				fill
-				className='object-cover brightness-75'
-				priority
-			/>
+				<Image
+					src='/club-marquis.png'
+					alt='Comedy Club Marquee'
+					fill
+					className='object-cover brightness-75'
+					priority
+				/>
 
-			{/*//> Frosted glass / blur overlay */}
-			<div className='absolute inset-0 z-10 bg-black/10 backdrop-blur-sm' />
+				{/*//> blur overlay for the image */}
+				<div className='absolute inset-0 z-10 bg-black/10 backdrop-blur-lg' />
 
-			{/*//> Text Content */}
-			<div className={clsx(
-				`${BarricietoFontClass}`,
-				'absolute inset-0 z-20 flex flex-col items-center',
-				'justify-center text-center px-4 text-white'
-			)}>
-				<h1 className={clsx(
-					'text-6xl md:text-9xl',
-					'text-yellow-400 drop-shadow-lg'
+				{/*//> Text Content */}
+				<div className='absolute inset-0 z-10'>
+					<div className={clsx(
+						`${BarricietoFontClass}`,
+						'h-full',
+						'flex flex-col items-center',
+						'justify-center text-center px-4 text-white'
 					)}>
-					i hate it here
-				</h1>
-				<p className={clsx(
-					'mt-4 max-w-xl drop-shadow-md',
-					'text-2xl sm:text-3xl: md:text-4xl',
-					theme === 'dark' ? 'text-white/75' : 'text-black'
-				)}>
-					you might like it though
-				</p>
+						<h1 className={clsx(
+							'text-6xl md:text-9xl',
+							'text-yellow-400 drop-shadow-lg'
+						)}>
+							i hate it here
+						</h1>
+						<p className={clsx(
+							'mt-4 max-w-xl drop-shadow-md',
+							'text-2xl sm:text-3xl: md:text-4xl',
+							theme === 'dark' ? 'text-white/75' : 'text-black'
+						)}>
+							you might like it though
+						</p>
+					</div>
+				</div>
 			</div>
-		</div>
+		// </div>
 	)
 }

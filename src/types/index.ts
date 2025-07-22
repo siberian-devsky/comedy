@@ -1,19 +1,21 @@
-import React from "react"
-import { SetStateAction } from "react"
+import React from 'react'
+import { SetStateAction } from 'react'
 
-export type CellData = {
-  id:          number
-  name:        string    
-  hometown:    string
-  imdbProfile: string
-  updated: Date
-}[] | null
+export type Comic = {
+	id: number
+	name: string
+	hometown: string
+	imdbProfile: string
+	updated: Date
+}
+
+export type ComicData = Comic[] | null
 
 export type CellModalProps = {
-    setShowModal: React.Dispatch<SetStateAction<boolean>>
+	setShowModal: React.Dispatch<SetStateAction<boolean>>
 }
 
 export type opStatus = {
-    message: string | null
-    status: 'ok' | 'nok'
+	message: string | null
+	status: 'ok' | 'nok'
 }
