@@ -17,7 +17,7 @@ export default function Grid() {
 		MOBILE_MENU_THRESHOLD + 1
 	) // default to desktop
 	const [deviceIsMobile, setdeviceIsMobile] = useState(false) // default to desktop
-	const [sidebarIsOpen, setSidebarIsOpen] = useState(true)
+	const [sidebarIsOpen, setSidebarIsOpen] = useState(false)
 	const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
 	const [mounted, setMounted] = useState(false)
 	const { theme } = useTheme()
@@ -37,6 +37,8 @@ export default function Grid() {
 
 			//! this should only be set here
 			setdeviceIsMobile(viewportWidth < MOBILE_MENU_THRESHOLD)
+			setSidebarIsOpen(viewportWidth > MOBILE_MENU_THRESHOLD)
+			console.log(deviceIsMobile, sidebarIsOpen)
 		}
 
 		return () => {
@@ -54,6 +56,14 @@ export default function Grid() {
 
 	// punch out to prevent hydration mismatch
 	if (!mounted) return null
+
+	function handleSidebarOpenCLick() {
+		console.log('sidebar should open: ', sidebarIsOpen);
+		setSidebarIsOpen(true)
+		//! hack?
+		const sidebarContainer = document.querySelector('#sidebarContainer') as HTMLDivElement
+		sidebarContainer?.classList.add('w-48t', 'ranslate-x-0')
+	}
 
 	return (
 		<div id='mainPage' className={clsx('flex flex-col h-screen w-screen')}>
@@ -73,16 +83,16 @@ export default function Grid() {
 
 			<main className='flex flex-row h-full w-full overflow-hidden'>
 				{/*//> sidebar */}
-				{sidebarIsOpen && !deviceIsMobile && (
+				{sidebarIsOpen && (
 					<div
 						id='sidebarContainer'
 						className={clsx(
-							'resize',
-							'h-full overflow-y-scroll',
-							'transition-all duration-300 ease-in-out',
+							'resize h-full overflow-y-scroll transition-all duration-300 ease-in-out',
 							deviceIsMobile
-								? 'w-0 -translate-x-full'
-								: 'w-48 translate-x-0'
+								? sidebarIsOpen
+									? 'w-48 translate-x-0'
+									: 'w-0 -translate-x-full'
+								: 'w-48 translate-x-0' // always open on desktop
 						)}
 					>
 						<Sidebar
@@ -107,7 +117,7 @@ export default function Grid() {
 						<button
 							id='showSidebar'
 							className='absolute z-50 w-full h-9 top-6 left-2 text-fuchsia-500'
-							onClick={() => setSidebarIsOpen(true)}
+							onClick={() => handleSidebarOpenCLick()}
 						>
 							<p className='w-full'>childhood baggage &gt;</p>
 						</button>
@@ -117,6 +127,7 @@ export default function Grid() {
 					{comicOnStage ? (
 						<div
 							className={clsx(
+								'flex flex-row justify-center',
 								'text-5xl text-icdb',
 								theme === 'light' &&
 									'text-shadow-lg text-shadow-[#d9d9d9]'
