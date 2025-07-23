@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ComicData, CellModalProps, opStatus } from '@/types'
 import CloseButton from './CloseButton';
 
-export default function AddCellModal( {setShowModal, setCells}: CellModalProps ) {
+export default function AddCellModal( {setShowModal, setComics}: CellModalProps ) {
     const [opStatus, setOpStatus] = useState<opStatus>({ message: null, status: 'ok' }) // Track operation status
 
     // Create new cell via backend API
@@ -20,7 +20,7 @@ export default function AddCellModal( {setShowModal, setCells}: CellModalProps )
                 setOpStatus({ message: 'This cell already exists', status: 'nok' }) // Handle duplicate error
             } else {
                 setOpStatus({ message: `${ComicData.data.name} created`, status: 'ok' }) // Success message
-                setCells(prev => [...prev, ComicData.data]) // Add to local state
+                setComics(prev => [...prev, ComicData.data]) // Add to local state
                 localStorage.setItem('cache', JSON.stringify(ComicData.data)) // Update cache
             }
 

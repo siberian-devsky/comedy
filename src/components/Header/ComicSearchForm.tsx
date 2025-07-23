@@ -1,14 +1,12 @@
 'use client'
-import { useState, useEffect, Dispatch, SetStateAction } from 'react'
-import { ComicData } from '@/types'
+import { useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { useTheme } from 'next-themes'
+import { useComicContext } from '@/context/ComicContext'
 
-type SearchProps = {
-	setCells: Dispatch<SetStateAction<ComicData>>
-}
-
-export default function ComicSearchForm({ setCells }: SearchProps) {
+export default function ComicSearchForm() {
+	// context
+	const { setComics } = useComicContext()
 	const [searchInput, setSearchInput] = useState('')
 	const [mounted, setMounted] = useState(false)
 	const [placeholder, setPlaceholder] = useState('Search ...')
@@ -60,12 +58,12 @@ export default function ComicSearchForm({ setCells }: SearchProps) {
 		})
 
 		if (res.status === 404) {
-			setCells([])
+			setComics([])
 			return
 		}
 
 		const data = await res.json()
-		setCells(data.comic)
+		setComics(data.comic)
 	}
 
 	return (

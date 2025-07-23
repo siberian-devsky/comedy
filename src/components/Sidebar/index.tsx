@@ -1,57 +1,45 @@
 'use client'
-import { useState, useEffect, Dispatch, SetStateAction } from 'react'
-import { Comic, ComicData } from '@/types'
+import { useState, useEffect } from 'react'
+import { Comic } from '@/types'
 import { useTheme } from 'next-themes'
 import ComicCell from '@/components/ComicCell'
+import { useComicContext } from '@/context/ComicContext'
 import clsx from 'clsx'
 
-type SidebarProps = {
-	comics: ComicData
-	setComics: Dispatch<SetStateAction<ComicData>>
-	deviceIsMobile: boolean
-	sidebarIsOpen: boolean
-	setSelectedComicId: Dispatch<SetStateAction<number>>
-}
+export default function Sidebar() {
+	const { comics, setSelectedComicId, dataLoading } = useComicContext()
 
-export default function Sidebar({
-	comics: comics,
-	setComics: setComics,
-	deviceIsMobile,
-	sidebarIsOpen,
-	setSelectedComicId
-}: SidebarProps) {
-	const [dataLoading, setDataLoading] = useState(false)
 	const [mounted, setMounted] = useState(false)
 	const { theme } = useTheme()
 
 	useEffect(() => {
 		setMounted(true)
-	}, [sidebarIsOpen, deviceIsMobile])
+	}, [])
 
-	// Fetch data
-	useEffect(() => {
-		setDataLoading(true)
-		const cache = localStorage.getItem('cache')
-		if (cache) {
-			setComics(JSON.parse(cache))
-			setDataLoading(false)
-		} else {
-			;(async () => {
-				try {
-					const res = await fetch(
-						'http://localhost:8080/api/v1/cells/all'
-					)
-					const data = await res.json()
-					setComics(data.comics)
-					localStorage.setItem('cache', JSON.stringify(data.comics))
-				} catch (err) {
-					console.error('fetch error:', err)
-				} finally {
-					setDataLoading(false)
-				}
-			})()
-		}
-	}, [setComics, deviceIsMobile])
+	// Fetch data,
+	// useEffect(() => {
+	// 	setDataLoading(true)
+	// 	const cache = localStorage.getItem('cache')
+	// 	if (cache) {
+	// 		setComics(JSON.parse(cache))
+	// 		setDataLoading(false)
+	// 	} else {
+	// 		;(async () => {
+	// 			try {
+	// 				const res = await fetch(
+	// 					'http://localhost:8080/api/v1/cells/all'
+	// 				)
+	// 				const data = await res.json()
+	// 				setComics(data.comics)
+	// 				localStorage.setItem('cache', JSON.stringify(data.comics))
+	// 			} catch (err) {
+	// 				console.error('fetch error:', err)
+	// 			} finally {
+	// 				setDataLoading(false)
+	// 			}
+	// 		})()
+	// 	}
+	// }, [setComics])
 
 	if (!mounted) return
 

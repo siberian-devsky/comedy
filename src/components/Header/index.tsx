@@ -8,7 +8,7 @@ import { ComicData } from '@/types'
 import { BarricietoFontClass } from '@/lib/config'
 
 type HeaderProps = {
-	setCells: Dispatch<SetStateAction<ComicData>>
+	setComics: Dispatch<SetStateAction<ComicData>>
 	deviceIsMobile: boolean
 	mobileMenuIsOpen: boolean
 	setMobileMenuIsOpen: Dispatch<SetStateAction<boolean>>
@@ -16,7 +16,6 @@ type HeaderProps = {
 }
 
 export default function Header({
-	setCells,
 	deviceIsMobile,
 	mobileMenuIsOpen,
 	setMobileMenuIsOpen,
@@ -73,7 +72,7 @@ export default function Header({
 			) : (
 				// else show the full menu
 				<div className={clsx('w-full flex flex-row justify-between')}>
-					<ComicSearchForm setCells={setCells} />
+					<ComicSearchForm/>
 					<ThemeSlider />
 				</div>
 			)}
@@ -92,7 +91,7 @@ export default function Header({
 					)}
 				>
 					<div className='flex flex-row justify-between'>
-						<ComicSearchForm setCells={setCells} />
+						<ComicSearchForm />
 						<div className={'-translate-y-0.5'}>
 							<ThemeSlider />
 						</div>
