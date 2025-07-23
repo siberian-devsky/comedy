@@ -13,6 +13,7 @@ export default function ComicCell({
 	hometown,
 	setSelectedComicId,
 }: CellProps) {
+	
 	function handleClick() {
 		setSelectedComicId?.(id)
 	}

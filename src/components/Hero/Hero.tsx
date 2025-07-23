@@ -51,7 +51,7 @@ export default function Hero() {
 							'text-2xl sm:text-3xl: md:text-4xl',
 							theme === 'dark' ? 'text-white/75' : 'text-black'
 						)}>
-							you might like it though
+							and i need help
 						</p>
 					</div>
 				</div>

@@ -58,8 +58,7 @@ export default function Grid() {
 	if (!mounted) return null
 
 	function handleSidebarOpenCLick() {
-		console.log('sidebar should open: ', sidebarIsOpen);
-		setSidebarIsOpen(true)
+		setSidebarIsOpen( (prev) => !prev )
 		//! hack?
 		const sidebarContainer = document.querySelector('#sidebarContainer') as HTMLDivElement
 		sidebarContainer?.classList.add('w-48t', 'ranslate-x-0')
@@ -116,14 +115,16 @@ export default function Grid() {
 					{deviceIsMobile && (
 						<button
 							id='showSidebar'
-							className='absolute z-50 w-full h-9 top-6 left-2 text-fuchsia-500'
+							className='absolute z-50 w-full h-9 top-6 left-2 text-icdb'
 							onClick={() => handleSidebarOpenCLick()}
 						>
-							<p className='w-full'>childhood baggage &gt;</p>
+							<div className='flex flex-row gap-1 pl-2'>
+								<span className='-rotate-90'>&lt;</span><p>sidebar</p>
+							</div>
 						</button>
 					)}
 
-					{/*//> content */}
+					{/*//> MAIN CONTENT */}
 					{comicOnStage ? (
 						<div
 							className={clsx(
