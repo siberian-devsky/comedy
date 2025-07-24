@@ -59,14 +59,14 @@ export default function App() {
 						'flex flex-col flex-1 max-w-screen max-h-screen items-center justify-center'
 					)}
 				>
-					{/*//> MAIN CONTENT */}
+					{/*//> stage */}
 					{comicOnStage ? (
 						<div
 							className={clsx(
 								'flex flex-row justify-center',
-								'text-5xl text-icdb',
+								'text-5xl text-icdb w-5/6',
 								theme === 'light' &&
-									'text-shadow-lg text-shadow-[#d9d9d9]'
+									'text-shadow-lg text-shadow-[#d8d8d8]'
 							)}
 						>
 							<ComicCell
