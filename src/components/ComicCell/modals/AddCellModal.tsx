@@ -8,7 +8,7 @@ export default function AddCellModal( {setShowModal, setComics}: CellModalProps 
     // Create new cell via backend API
     const createCell = async(data: Omit<ComicData, 'id'|'updated'>) => {
         try {
-            const resp = await fetch('http://localhost:8080/api/v1/cells/create', { // API endpoint for creation
+            const resp = await fetch('http://localhost:8080/api/v1/comics/create', { // API endpoint for creation
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data),

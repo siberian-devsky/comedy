@@ -22,7 +22,7 @@ export default function ComicCell({
 		<div
 			id={id.toString()}
 			className={clsx(
-				'w-2/3 h-48 rounded-xl flex flex-col items-center justify-center',
+				'w-full h-48 rounded-xl flex flex-col items-center justify-center',
 				'mx-2 shadow-md shadow-icdb/25',
 				'hover:shadow-icdb hover:shadow-lg duration-500'
 			)}

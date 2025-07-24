@@ -1,6 +1,6 @@
 import express from 'express'
 import initMiddleware from './middleware'
-import cellApiRoutes from './routes/cellApiRoutes'
+import cellApiRoutes from './routes/comicApiRoutes'
 
 const app = express()
 const port = 4000

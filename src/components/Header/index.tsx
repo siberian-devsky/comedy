@@ -1,36 +1,27 @@
 'use client'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ThemeSlider from '../Theme/ThemeSlider'
 import ComicSearchForm from './ComicSearchForm'
 import clsx from 'clsx'
 import { useTheme } from 'next-themes'
-import { ComicData } from '@/types'
 import { BarricietoFontClass } from '@/lib/config'
+import { useUiContext } from '@/context/UiContext'
 
-type HeaderProps = {
-	setComics: Dispatch<SetStateAction<ComicData>>
-	deviceIsMobile: boolean
-	mobileMenuIsOpen: boolean
-	setMobileMenuIsOpen: Dispatch<SetStateAction<boolean>>
-	viewportWidth: number
-}
-
-export default function Header({
-	deviceIsMobile,
-	mobileMenuIsOpen,
-	setMobileMenuIsOpen,
-}: HeaderProps & {}) {
+export default function Header() {
 	const { theme } = useTheme()
 	const [mounted, setMounted] = useState(false)
+	const {
+		mobileMenuIsOpen, setMobileMenuIsOpen,
+		sidebarIsOpen, setSidebarIsOpen,
+		deviceIsMobile
+	} = useUiContext()
 
 	useEffect(() => {
 		setMounted(true)
-	}, [])
 
-	useEffect(() => {
 		// guarantee that the menu wont reopen when back in mobile mode
 		if (!deviceIsMobile && mobileMenuIsOpen) setMobileMenuIsOpen(false)
-	}, [deviceIsMobile, mobileMenuIsOpen])
+	}, [deviceIsMobile, mobileMenuIsOpen, setMobileMenuIsOpen])
 
 	if (!mounted) return
 
@@ -43,31 +34,53 @@ export default function Header({
 				theme === 'dark' ? 'bg-black' : 'bg-white'
 			)}
 		>
-			{/*//> //smoosh header components into toggle menu */}
+			{/*//> smoosh header components into toggle menu */}
 			{deviceIsMobile ? (
 				<div
 					className={clsx(
 						'w-full flex flex-row',
-						'items-center justify-end',
+						'items-center justify-between',
 						'text-xl'
 					)}
 				>
-					<button
-						id='menuToggle'
-						onClick={() => setMobileMenuIsOpen((prev) => !prev)}
-						className={clsx(
-							`${BarricietoFontClass}`,
-							'flex flex-row items-center justify-center',
-							'w-6 h-auto rounded-lg',
-							'font-bold cursor-pointer',
-							'bg-transparent text-2xl',
-							'transition-transform duration-300 ease-in-out',
-							theme === 'dark' ? 'text-icdb' : 'text-black',
-							mobileMenuIsOpen ? 'rotate-180' : 'rotate-0'
-						)}
-					>
-						?
-					</button>
+					{/*//> sidebar popout control */}					
+					{/* <div className='w-full'> */}
+						<button
+							id='showSidebar'
+							className='text-icdb'
+							onClick={() => setSidebarIsOpen( (prev) => !prev )}
+						>
+							<div className='flex flex-row gap-2 pl-2'>
+								<span className={clsx(
+									'transition-all duration-150 ease-linear',
+									sidebarIsOpen ? 'rotate-90' : 'rotate-0'
+								)}
+								>
+									&gt;
+								</span>
+							</div>
+						</button>
+					{/* </div> */}
+
+					{/*//> menu button */}
+					{/* <div className='w-full'> */}
+						<button
+							id='menuToggle'
+							onClick={() => setMobileMenuIsOpen((prev) => !prev)}
+							className={clsx(
+								`${BarricietoFontClass}`,
+								'flex flex-row items-center justify-center',
+								'w-6 h-auto rounded-lg',
+								'font-bold cursor-pointer',
+								'bg-transparent text-2xl',
+								'transition-transform duration-300 ease-in-out',
+								theme === 'dark' ? 'text-icdb' : 'text-black',
+								mobileMenuIsOpen ? 'rotate-180' : 'rotate-0'
+							)}
+						>
+							?
+						</button>
+					{/* </div> */}
 				</div>
 			) : (
 				// else show the full menu
