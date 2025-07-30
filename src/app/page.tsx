@@ -2,16 +2,16 @@
 import { useEffect, useState } from 'react'
 import { useComicContext } from '@/context/ComicContext'
 import { useUiContext } from '@/context/UiContext'
-import { useTheme } from 'next-themes'
 import clsx from 'clsx'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero/Hero'
 import Sidebar from '@/components/Sidebar'
 import ComicCell from '@/components/ComicCell'
+import FourOhFour from '@/components/404'
 
 export default function App() {
 	const { onStage, dataLoading } = useComicContext()
-	const { sidebarIsOpen, deviceIsMobile } = useUiContext()
+	const { sidebarIsOpen, deviceIsMobile, is404 } = useUiContext()
 	const [mounted, setMounted] = useState(false)
 
 	useEffect(() => {
@@ -22,22 +22,28 @@ export default function App() {
 	if (!mounted) return null
 
 	return (
-		<div id='mainPage' className={clsx('flex flex-col h-screen w-screen')}>
+		<div
+			id='mainPage'
+			className={clsx('flex flex-col h-screen w-screen')}
+		>
 			{/*//> header */}
-			<div
+			<nav
 				id='headerContainer'
 				className={clsx('fixed top-0 left-0 z-50 h-auto w-screen')}
 			>
 				{/* mobile header is in here too */}
 				<Header />
-			</div>
+			</nav>
 
-			<main className='flex flex-row h-full w-full overflow-hidden'>
+			<main
+				id='mainContainer'
+				className='flex flex-row h-full w-full overflow-hidden'
+			>
 				{/*//> sidebar */}
-				<div
+				<section
 					id='sidebarContainer'
 					className={clsx(
-						'resize h-full overflow-y-scroll transition-all duration-300 ease-in-out',
+						'bg-icdb h-full overflow-y-scroll transition-all duration-300 ease-in-out',
 						deviceIsMobile
 							? sidebarIsOpen
 								? 'w-48 translate-x-0'
@@ -46,7 +52,7 @@ export default function App() {
 					)}
 				>
 					<Sidebar />
-				</div>
+				</section>
 
 				{/*//> main content */}
 				<section
@@ -65,12 +71,12 @@ export default function App() {
 					{/*//> stage */}
 					{onStage ? (
 						<div
-							className={clsx('flex flex-row justify-center w-5/6')}
+							className={clsx('flex flex-row justify-center w-full')}
 						>
 							<ComicCell key={onStage.id} {...onStage} />
 						</div>
 					) : (
-						<Hero />
+						is404 ? <FourOhFour /> : <Hero />
 					)}
 				</section>
 			</main>

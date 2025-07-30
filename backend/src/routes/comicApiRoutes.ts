@@ -1,16 +1,8 @@
 import { Router } from 'express'
-import {
-	GetAllComics,
-	GetOneComicByName,
-	GetComic,
-} from '../controllers/comicController'
+import { FindComicByName } from '../controllers/comicController'
 
-const router = Router()
+const peopleRouter = Router()
 
-router.get('/comics/all', GetAllComics)
-router.post('/comics', GetOneComicByName)
+peopleRouter.get('/getcomic/:name', FindComicByName)
 
-//>add here
-router.get('/getcomic/:name', GetComic)
-
-export default router
+export default peopleRouter

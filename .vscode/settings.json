@@ -58,7 +58,7 @@
     "terminal.external.windowsExec": "/mnt/c/Windows/System32/cmd.exe",
     "isort.check": true,
     "editor.tokenColorCustomizations": {
-        "comments": "#ff5900",
+        "comments": "#ff5900"
     },
     "editor.fontSize": 16,
     "vscode-postgres.showExplorer": true,

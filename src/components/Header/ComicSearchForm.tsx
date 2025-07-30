@@ -9,7 +9,7 @@ import clsx from 'clsx'
 export default function ComicSearchForm() {
 	// context
 	const { searchHistory, setSearchHistory, setonStage } = useComicContext()
-	const { setStatusModal } = useUiContext()
+	const { setIs404 } = useUiContext()
 	const { theme } = useTheme()
 	const [searchInput, setSearchInput] = useState('')
 	const [mounted, setMounted] = useState(false)
@@ -67,13 +67,14 @@ export default function ComicSearchForm() {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
+		// search cache
 		const cache = localStorage.getItem('cache')
 		if (cache) {
 			const data = JSON.parse(cache)
 			const found = data.find(
 				(comic: Comic) => comic.name === searchInput
 			)
-			if (found) {
+			if (found) { // update history
 				const exists = searchHistory?.filter( (h) => h.name === found)
 				if (!exists) {
 					setSearchHistory((prev) => [...prev, found])
@@ -82,25 +83,27 @@ export default function ComicSearchForm() {
 				setonStage(found)
 			}
 		} else {
-			fetch(`/api/v1/getcomic/${searchInput}`, { method: 'GET' })
-				.then((res) => {
-					if (!res.ok) {
-						setStatusModal({
-							status: res.status,
-							statusText: res.statusText,
-							color: 'red',
-						})
+			// hit the network
+			try {
+				const res = await fetch(`/api/v1/getcomic/${searchInput}`, { method: 'GET' })
+				const data = await res.json()
+
+				if (!res.ok) {
+					if (res.status === 404) {
+						setIs404(true)
+						return
 					}
-					return res.json()
-				})
-				.then((data) => {
-					// set the view
-					const comic: Comic = data.data
-					setonStage(comic)
-				})
-				.catch((err) => {
-					console.log(err)
-				})
+				}
+
+				const comic: Comic = data.data
+				
+				// build the imdb url
+				comic.imdb_id = `https://www.imdb.com/name/${comic.imdb_id}`
+
+				setonStage(comic)
+			} catch (err) {
+				console.error(err)
+			}
 		}
 	}
 
