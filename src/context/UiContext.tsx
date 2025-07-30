@@ -11,6 +11,7 @@ import {
 } from 'react'
 
 import { MOBILE_MENU_THRESHOLD } from '@/lib/config'
+import { OpStatus } from '@/types'
 
 type UiContextType = {
 	deviceIsMobile: boolean
@@ -20,6 +21,8 @@ type UiContextType = {
 	sidebarIsOpen: boolean
 	setSidebarIsOpen: Dispatch<SetStateAction<boolean>>
 	viewportWidth: number
+	statusModal: OpStatus | undefined
+	setStatusModal: Dispatch<SetStateAction<OpStatus | undefined>>
 }
 
 const UiContext = createContext<UiContextType | undefined>(undefined)
@@ -31,6 +34,7 @@ export function UiContextProvider({ children }: { children: ReactNode }) {
 	const [deviceIsMobile, setDeviceIsMobile] = useState(false)
 	const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false)
+	const [statusModal, setStatusModal] = useState<OpStatus>();
 
 	// master event handler for responsiveness
 	useEffect(() => {
@@ -62,6 +66,8 @@ export function UiContextProvider({ children }: { children: ReactNode }) {
 				sidebarIsOpen,
 				setSidebarIsOpen,
 				viewportWidth,
+				statusModal,
+				setStatusModal
 			}}
 		>
 			{children}

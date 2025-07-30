@@ -4,10 +4,7 @@ import { PrismaClient } from '../generated/prisma'
 const prisma = new PrismaClient()
 
 // GET /comics - get all comics
-export async function GetAllComics(
-	req: Request,
-	res: Response
-): Promise<void> {
+export async function GetAllComics(req: Request, res: Response): Promise<void> {
 	try {
 		const comicData = await prisma.comic.findMany()
 
@@ -25,7 +22,6 @@ export async function GetAllComics(
 			comics: comicData,
 		})
 		return
-
 	} catch (err) {
 		console.error('GetAllComics error:', err)
 		res.status(500).json({
@@ -73,19 +69,63 @@ export async function GetOneComicByName(
 	}
 }
 
-// GET test to https://www.themoviedb.org/
-export async function TmdbTest(req: Request, res: Response): Promise<void> {
-	const url = 'https://api.themoviedb.org/3/authentication'
+// GET test to https://api.themoviedb.org/3
+export async function GetComic(req: Request, res: Response): Promise<void> {
+	const auth = process.env.TMDB_API_BAT
+	if (!auth) {
+		res.status(401).send({
+			status: 401,
+			data: {},
+			message: 'Invalid access token',
+		})
+		return
+	}
+
+	const name = req.params.name || 'Dave Chappelle'
+	const rootUrl = 'https://api.themoviedb.org/3'
+	const personUrl = encodeURI(`${rootUrl}/search/person?query=${name}&include_adult=false&language=en-US&page=1`)
+
 	const options = {
 		method: 'GET',
 		headers: {
 			accept: 'application/json',
-			Authorization:
-				'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxOGY2YzQ0Y2VjNTdlNDlmNDgyMzJmYzU2NzAwM2IxYSIsIm5iZiI6MTc1MjYxODk4MC44NzgsInN1YiI6IjY4NzZkN2U0ZjE4NzFhZGY4ODA1MjIyNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KwDn0qgfoorhK4KXcywssqhSl5jSljy8qiXejVbu168',
+			Authorization: `Bearer ${auth}`,
 		},
 	}
 
-	console.log(url, options)
+	try {
+		const searchResponse = await fetch(personUrl, options)
+		if (!searchResponse.ok) {
+			throw new Error(`MAIN: TMDB returned a bad status: ${searchResponse.statusText}`)
+		}
 
-	res.json({ message: 'TMDB test endpoint' })
+		const searchData = await searchResponse.json()
+		const profile = searchData.results[0]
+		if (!profile?.id) {
+			throw new Error('No matching profile found')
+		}
+
+		console.log(`Found ID: ${profile.id}`)
+		const detailsUrl = `${rootUrl}/person/${profile.id}`
+
+		const detailsResponse = await fetch(detailsUrl, options)
+		if (!detailsResponse.ok) {
+			throw new Error(`DETAILS: TMDB returned a bad status: ${detailsResponse.statusText}`)
+		}
+
+		const detailsData = await detailsResponse.json()
+
+		res.status(200).send({
+			status: 200,
+			data: detailsData,
+			message: res.statusMessage,
+		})
+	} catch (err) {
+		console.error(err)
+		res.status(500).send({
+			status: 500,
+			data: {},
+			message: res.statusMessage,
+		})
+	}
 }

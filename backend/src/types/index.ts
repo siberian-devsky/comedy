@@ -1,8 +1,5 @@
-export interface ComicData {
-	id: number
-	name: string
-	icon: string
-	iconCode: string
-	currentValue: number
-	updated: Date
+export type ComicQueryResponse = {
+	status: number
+	data: object
+	message: string
 }

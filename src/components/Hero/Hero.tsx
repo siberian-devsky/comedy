@@ -21,13 +21,13 @@ export default function Hero() {
 		// <div>
 			<div className='relative w-full h-full'>
 			{/*//> Background image */}
-				<Image
+				{/* <Image
 					src='/club-marquis.png'
 					alt='Comedy Club Marquee'
 					fill
 					className='object-cover brightness-75'
 					priority
-				/>
+				/> */}
 
 				{/*//> blur overlay for the image */}
 				<div className='absolute inset-0 z-10 bg-black/10 backdrop-blur-lg' />
@@ -51,7 +51,6 @@ export default function Hero() {
 							'text-2xl sm:text-3xl: md:text-4xl',
 							theme === 'dark' ? 'text-white/75' : 'text-black'
 						)}>
-							and i need help
 						</p>
 					</div>
 				</div>

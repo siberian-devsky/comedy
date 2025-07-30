@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { ComicData, CellModalProps, opStatus } from '@/types'
+import { ComicData, CellModalProps, OpStatus } from '@/types'
 import CloseButton from './CloseButton';
 
 export default function AddCellModal( {setShowModal, setComics}: CellModalProps ) {
-    const [opStatus, setOpStatus] = useState<opStatus>({ message: null, status: 'ok' }) // Track operation status
+    const [opStatus, setOpStatus] = useState<OpStatus>({ message: null, status: 'ok' }) // Track operation status
 
     // Create new cell via backend API
     const createCell = async(data: Omit<ComicData, 'id'|'updated'>) => {

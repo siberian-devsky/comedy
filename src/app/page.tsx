@@ -10,13 +10,9 @@ import Sidebar from '@/components/Sidebar'
 import ComicCell from '@/components/ComicCell'
 
 export default function App() {
-	const { comicOnStage } = useComicContext()
+	const { onStage, dataLoading } = useComicContext()
+	const { sidebarIsOpen, deviceIsMobile } = useUiContext()
 	const [mounted, setMounted] = useState(false)
-	const { theme } = useTheme()
-	const {
-		sidebarIsOpen, setSidebarIsOpen,
-		deviceIsMobile, mobileMenuIsOpen
-	} = useUiContext()
 
 	useEffect(() => {
 		setMounted(true)
@@ -31,9 +27,9 @@ export default function App() {
 			<div
 				id='headerContainer'
 				className={clsx('fixed top-0 left-0 z-50 h-auto w-screen')}
-			>	
+			>
 				{/* mobile header is in here too */}
-				<Header /> 
+				<Header />
 			</div>
 
 			<main className='flex flex-row h-full w-full overflow-hidden'>
@@ -44,10 +40,10 @@ export default function App() {
 						'resize h-full overflow-y-scroll transition-all duration-300 ease-in-out',
 						deviceIsMobile
 							? sidebarIsOpen
-									? 'w-48 translate-x-0'
-									: 'w-0 -translate-x-full'
+								? 'w-48 translate-x-0'
+								: 'w-0 -translate-x-full'
 							: 'w-48 translate-x-0' // always open on desktop
-				)}
+					)}
 				>
 					<Sidebar />
 				</div>
@@ -59,20 +55,19 @@ export default function App() {
 						'flex flex-col flex-1 max-w-screen max-h-screen items-center justify-center'
 					)}
 				>
+					{/*//> loading */}
+					{dataLoading && (
+						<div className='w-24 h-full flex items-center justify-center'>
+							<span>Loading...</span>
+						</div>
+					)}
+
 					{/*//> stage */}
-					{comicOnStage ? (
+					{onStage ? (
 						<div
-							className={clsx(
-								'flex flex-row justify-center',
-								'text-5xl text-icdb w-5/6',
-								theme === 'light' &&
-									'text-shadow-lg text-shadow-[#d8d8d8]'
-							)}
+							className={clsx('flex flex-row justify-center w-5/6')}
 						>
-							<ComicCell
-								key={comicOnStage.id}
-								{...comicOnStage}
-							/>
+							<ComicCell key={onStage.id} {...onStage} />
 						</div>
 					) : (
 						<Hero />

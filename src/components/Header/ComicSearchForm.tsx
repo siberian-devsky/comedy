@@ -1,13 +1,15 @@
 'use client'
 import { useState, useEffect } from 'react'
-import clsx from 'clsx'
 import { useTheme } from 'next-themes'
 import { useComicContext } from '@/context/ComicContext'
-import { Comic, ComicData } from '@/types'
+import { useUiContext } from '@/context/UiContext'
+import { Comic } from '@/types'
+import clsx from 'clsx'
 
 export default function ComicSearchForm() {
 	// context
-	const { setComics } = useComicContext()
+	const { searchHistory, setSearchHistory, setonStage } = useComicContext()
+	const { setStatusModal } = useUiContext()
 	const { theme } = useTheme()
 	const [searchInput, setSearchInput] = useState('')
 	const [mounted, setMounted] = useState(false)
@@ -43,13 +45,9 @@ export default function ComicSearchForm() {
 
 	// set placeholder
 	useEffect(() => {
-		if (!mounted) return
-
-		if (typeof window === 'undefined') return
-
 		const isMac = navigator.userAgent.toLowerCase().includes('mac')
 		setPlaceholder(isMac ? '⌘K' : '⊞K')
-	}, [mounted])
+	}, [])
 
 	// escape key
 	useEffect(() => {
@@ -57,46 +55,53 @@ export default function ComicSearchForm() {
 			if (e.key === 'Escape') {
 				e.preventDefault()
 				setSearchInput('')
-
-				// restore list
-				const cache = localStorage.getItem('cache')
-				if (cache) {
-					const data: ComicData = JSON.parse(cache)
-					setComics(data)
-				}
 			}
 		}
 
 		addEventListener('keydown', handleEscape)
 		return () => removeEventListener('keydown', handleEscape)
-	}, [setComics])
+	}, [])
+
+	if (!mounted) return
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+
 		const cache = localStorage.getItem('cache')
 		if (cache) {
 			const data = JSON.parse(cache)
-			const found = data.find((comic: Comic) => comic.name === searchInput)
-			if (found) setComics([found])
-		} else {
-			const res = await fetch('/api/v1/cells', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ searchInput: searchInput }),
-			})
-
-			if (res.status === 404) {
-				setComics([])
-				return
+			const found = data.find(
+				(comic: Comic) => comic.name === searchInput
+			)
+			if (found) {
+				const exists = searchHistory?.filter( (h) => h.name === found)
+				if (!exists) {
+					setSearchHistory((prev) => [...prev, found])
+				}
+				
+				setonStage(found)
 			}
-
-			// set the view
-			const data = await res.json()
-			setComics(data.comic)
+		} else {
+			fetch(`/api/v1/getcomic/${searchInput}`, { method: 'GET' })
+				.then((res) => {
+					if (!res.ok) {
+						setStatusModal({
+							status: res.status,
+							statusText: res.statusText,
+							color: 'red',
+						})
+					}
+					return res.json()
+				})
+				.then((data) => {
+					// set the view
+					const comic: Comic = data.data
+					setonStage(comic)
+				})
+				.catch((err) => {
+					console.log(err)
+				})
 		}
-
-		// update the search field
-		setSearchInput(prev => prev + ' ..esc to clear')
 	}
 
 	return (
