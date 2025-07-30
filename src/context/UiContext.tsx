@@ -23,6 +23,8 @@ type UiContextType = {
 	viewportWidth: number
 	statusModal: OpStatus | undefined
 	setStatusModal: Dispatch<SetStateAction<OpStatus | undefined>>
+	is404: boolean
+	setIs404: Dispatch<SetStateAction<boolean>>
 }
 
 const UiContext = createContext<UiContextType | undefined>(undefined)
@@ -34,7 +36,8 @@ export function UiContextProvider({ children }: { children: ReactNode }) {
 	const [deviceIsMobile, setDeviceIsMobile] = useState(false)
 	const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false)
-	const [statusModal, setStatusModal] = useState<OpStatus>();
+	const [statusModal, setStatusModal] = useState<OpStatus>()
+	const [is404, setIs404] = useState(false);
 
 	// master event handler for responsiveness
 	useEffect(() => {
@@ -67,7 +70,9 @@ export function UiContextProvider({ children }: { children: ReactNode }) {
 				setSidebarIsOpen,
 				viewportWidth,
 				statusModal,
-				setStatusModal
+				setStatusModal,
+				is404,
+				setIs404
 			}}
 		>
 			{children}

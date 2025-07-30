@@ -3,6 +3,7 @@ import { PrismaClient } from '../generated/prisma'
 
 const prisma = new PrismaClient()
 
+
 // GET /comics - get all comics
 export async function GetAllComics(req: Request, res: Response): Promise<void> {
 	try {
@@ -73,7 +74,7 @@ export async function GetOneComicByName(
 export async function GetComic(req: Request, res: Response): Promise<void> {
 	const auth = process.env.TMDB_API_BAT
 	if (!auth) {
-		res.status(401).send({
+		res.status(401).json({
 			status: 401,
 			data: {},
 			message: 'Invalid access token',
@@ -95,14 +96,38 @@ export async function GetComic(req: Request, res: Response): Promise<void> {
 
 	try {
 		const searchResponse = await fetch(personUrl, options)
-		if (!searchResponse.ok) {
-			throw new Error(`MAIN: TMDB returned a bad status: ${searchResponse.statusText}`)
+		if (!searchResponse.ok) { // just deal with 404 & 5xx for now; 401 handled above
+			if (searchResponse.status === 404) {
+				res.status(404).json({
+					status: 404,
+					data: {},
+					message: `${name} ain't in here`
+				})
+
+				return
+			} else {
+				throw new Error(`MAIN: TMDB returned a bad status: ${searchResponse.statusText}`)
+			}
 		}
 
 		const searchData = await searchResponse.json()
+		if (searchData.total_results === 0) {
+			res.status(404).json({
+					status: 404,
+					data: {},
+					message: `${name} ain't in here`
+			})
+			return
+		}
+
 		const profile = searchData.results[0]
 		if (!profile?.id) {
-			throw new Error('No matching profile found')
+			res.status(404).json({
+				status: 404,
+				data: null,
+				message: `${name} ain't in here`
+			})
+			return
 		}
 
 		console.log(`Found ID: ${profile.id}`)
@@ -115,17 +140,20 @@ export async function GetComic(req: Request, res: Response): Promise<void> {
 
 		const detailsData = await detailsResponse.json()
 
-		res.status(200).send({
+		res.status(200).json({
 			status: 200,
 			data: detailsData,
 			message: res.statusMessage,
 		})
+		return
+
 	} catch (err) {
 		console.error(err)
-		res.status(500).send({
+		res.status(500).json({
 			status: 500,
-			data: {},
+			data: null,
 			message: res.statusMessage,
 		})
+		return
 	}
 }

@@ -5,17 +5,17 @@ export type Comic = {
 	adult: boolean
 	also_known_as: string[]
 	biography: string
-	birthday: string | null
-	deathday: string | null
+	birthday: string
+	deathday: string
 	gender: number
-	homepage: string | null
+	homepage: string
 	id: number
 	imdb_id: string
 	known_for_department: string
 	name: string
 	place_of_birth: string
 	popularity: number
-	profile_path: string | null
+	profile_path: string
 }
 
 export type ComicData = Comic[] | null
