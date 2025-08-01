@@ -89,7 +89,7 @@ export async function FindComicByName(req: Request, res: Response): Promise<void
 		if (!profile?.id) {
 			res.status(404).json({
 				status: 404,
-				data: null,
+				data: {},
 				message: `${name} ain't in here`
 			})
 			return
