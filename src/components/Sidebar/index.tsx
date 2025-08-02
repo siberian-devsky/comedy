@@ -15,7 +15,10 @@ export default function Sidebar() {
 
 	return (
 		//> sidebar container
-		<aside id='sidebarAside'>
+		<aside id='sidebarAside'
+		className={clsx(
+			'bg-green-300 h-full overflow-y-scroll transition-all duration-300 ease-in-out'
+		)}>
 			{/*//> degenerate cards */}
 			{searchHistory && (
 				<div
@@ -32,6 +35,7 @@ export default function Sidebar() {
 							{...comic}
 						/>
 					))} */}
+					<p>ad;akd;lakd;alkda;lskd</p>
 				</div>
 			)}
 		</aside>

@@ -43,7 +43,6 @@ export default function App() {
 				<section
 					id='sidebarContainer'
 					className={clsx(
-						'bg-icdb h-full overflow-y-scroll transition-all duration-300 ease-in-out',
 						deviceIsMobile
 							? sidebarIsOpen
 								? 'w-48 translate-x-0'
