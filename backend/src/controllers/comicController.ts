@@ -105,6 +105,12 @@ export async function FindComicByName(req: Request, res: Response): Promise<void
 
 		const detailsData: PersonDetail = await detailsResponse.json()
 
+		// split name into parts for easier FE consumption
+		const nameParts = detailsData.name.split(' ')
+		detailsData.firstName = nameParts[0]
+		detailsData.lastName = nameParts.slice(1).join(' ')
+
+		// filter out stuff FE does not need
 		const omit = [
 			'adult',
 			'also_known_as',

@@ -2,11 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,wdth@8..144,100..900,75..125');
 
 @theme {
-  --color-icdb: #F5C518;
-  --border-icdb: #F5C518;
-  --bg-icdb: #F5C518;
+	--color-pyellow: #f5c518;
+	--border-pyellow: #f5c518;
+	--bg-pyellow: #f5c518;
 }
 
 html {
-  font-family: 'Roboto-Flex', sans-serif;
+	font-family: 'Roboto-Flex', sans-serif;
 }

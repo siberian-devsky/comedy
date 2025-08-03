@@ -2,18 +2,15 @@
 import clsx from 'clsx'
 import { useTheme } from 'next-themes'
 import { useComicContext } from '@/context/ComicContext'
+import NamePill from '../NamePill'
 import Image from 'next/image'
-
 
 export default function ComicCell() {
 	const { onStage } = useComicContext()
-	const {theme, } = useTheme()
+	const { theme } = useTheme()
 
-	if (!onStage) return 
+	if (!onStage) return
 
-	const nameParts = onStage.name.split(' ')
-	const firstName = nameParts[0]
-	const lastName = nameParts.slice(1).join(' ')
 	const imgUrl = `https://image.tmdb.org/t/p/original${onStage.profile_path}`
 
 	return (
@@ -21,9 +18,9 @@ export default function ComicCell() {
 			id={onStage.id.toString()}
 			className={clsx(
 				'flex flex-row w-[750px] h-96 mx-2 rounded-md p-4',
-				'border border-icdb transition-all duration-100'
+				'border border-pyellow transition-all duration-100'
 			)}
-		>	
+		>
 			{/* id + profile pic */}
 			<div className={clsx('flex flex-col w-full h-full gap-4 mr-8')}>
 				<div>
@@ -42,14 +39,17 @@ export default function ComicCell() {
 					<tbody>
 						{/* name */}
 						<tr>
-							<td className={clsx(
+							<td
+								className={clsx(
 									'sticky top-0 pb-4',
-									theme === 'dark' ? 'bg-black' : 'bg-white' 
+									theme === 'dark' ? 'bg-black' : 'bg-white'
 								)}
 							>
-								<div id='imdbLink' className='max-h-8 w-1/4 flex flex-row items-center justify-start'>
-									<span className='max-h-8 pr-[3px] text-slate-800 bg-icdb pl-4 flex justify-end rounded-l-md'>{firstName}</span>
-									<span className='max-h-8 pl-[3px] text-icdb bg-slate-800 pr-4 rounded-r-md'>{lastName}</span>
+								<div
+									id='imdbLink'
+									className='max-h-8 w-1/4 flex flex-row items-center justify-start'
+								>
+									<NamePill comic={onStage}/>
 								</div>
 							</td>
 						</tr>

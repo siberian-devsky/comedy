@@ -25,7 +25,7 @@ export default function ThemeSlider() {
 				'w-12 h-auto',
 				'translate-y-1 overflow-hidden',
 				'rounded-full cursor-pointer',
-				'border-2 border-icdb',
+				'border-2 border-pyellow',
 				isDark ? 'bg-slate-800' : 'bg-white'
 			)}
 		>

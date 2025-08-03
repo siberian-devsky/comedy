@@ -4,8 +4,10 @@ import { SetStateAction } from 'react'
 export type Comic = {
 	biography: string
 	homepage: string
+	firstName: string
 	id: string
 	imdb_id: string
+	lastName: string
 	name: string
 	place_of_birth: string
 	profile_path: string
