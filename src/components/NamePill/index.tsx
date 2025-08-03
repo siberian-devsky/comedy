@@ -11,13 +11,13 @@ export default function NamePill( {comic}: {comic: Comic} ) {
     }
 
     return (
-        <li className={clsx('flex flex-row cursor-pointer')}
+        <li className={clsx('flex flex-row cursor-pointer min-w-[170px]')}
             onClick={() => handleClick(comic)}
         >
-        	<span className={clsx('min-w-[75px] pr-[3px] text-slate-800 bg-pyellow pl-4 flex justify-end rounded-l-md')}>
+        	<span className={clsx('w-[85px] pr-[3px] text-slate-800 bg-pyellow pl-4 flex justify-end rounded-l-md')}>
         		{comic.firstName}
         	</span>
-        	<span className={clsx('min-w-[75px] pl-[3px] text-pyellow bg-slate-800 pr-4 rounded-r-md')}>
+        	<span className={clsx('w-[85px] pl-[3px] text-pyellow bg-slate-800 pr-4 rounded-r-md')}>
         		{comic.lastName}
         	</span>
         </li>

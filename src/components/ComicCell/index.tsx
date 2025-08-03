@@ -1,14 +1,10 @@
 'use client'
 import clsx from 'clsx'
-import { useTheme } from 'next-themes'
 import { useComicContext } from '@/context/ComicContext'
-import NamePill from '../NamePill'
 import Image from 'next/image'
 
 export default function ComicCell() {
 	const { onStage } = useComicContext()
-	const { theme } = useTheme()
-
 	if (!onStage) return
 
 	const imgUrl = `https://image.tmdb.org/t/p/original${onStage.profile_path}`
@@ -40,17 +36,20 @@ export default function ComicCell() {
 						{/* name */}
 						<tr>
 							<td
-								className={clsx(
-									'sticky top-0 pb-4',
-									theme === 'dark' ? 'bg-black' : 'bg-white'
-								)}
+								className={clsx('sticky top-0 pb-4')}
 							>
-								<div
-									id='imdbLink'
-									className='max-h-8 w-1/4 flex flex-row items-center justify-start'
-								>
-									<NamePill comic={onStage}/>
-								</div>
+								{onStage.name}
+								<span>
+									<a href={onStage.imdb_id} target='_blank'>
+										<button className={clsx(
+											'ml-2 px-1 text-xs h-auto rounded-md',
+											'bg-pyellow text-black cursor-pointer'
+										)}
+										>
+											IMDb
+										</button>
+									</a>
+								</span>
 							</td>
 						</tr>
 						{/* home */}

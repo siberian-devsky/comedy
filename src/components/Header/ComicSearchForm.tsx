@@ -126,6 +126,12 @@ export default function ComicSearchForm() {
 		}
 	}
 
+
+	const handleClick = () => {
+		setonStage(undefined)
+		setSearchHistory([])
+	}
+
 	return (
 		<form
 			id='formContainer'
@@ -149,14 +155,27 @@ export default function ComicSearchForm() {
 			<button
 				type='submit'
 				className={clsx(
-					'cursor-pointer min-w-16 h-8 rounded-lg border-2 border-pyellow ml-2',
+					'cursor-pointer min-w-16 h-8 rounded-lg border border-pyellow ml-2',
 					theme === 'dark'
-						? 'bg-black text-icdb'
-						: 'bg-white text-black'
+						? 'bg-black text-pyellow'
+						: 'bg-pyellow text-black'
 				)}
 			>
 				find
 			</button>
+			{searchHistory.length > 0 && 
+				<button
+					className={clsx(
+						'cursor-pointer min-w-16 h-8 rounded-lg border border-pyellow ml-2',
+						theme === 'dark'
+							? 'bg-black text-pyellow'
+							: 'bg-pyellow text-black'
+					)}
+					onClick={ () => handleClick()}
+				>
+					clear
+				</button>
+			}
 		</form>
 	)
 }
