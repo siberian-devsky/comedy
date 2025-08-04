@@ -4,7 +4,6 @@ import { BarricietoFontClass } from '@/lib/config';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-
 export default function FourOhFour() {
 	const {theme, } = useTheme()
 	const [mounted, setMounted] = useState(false)
@@ -26,14 +25,14 @@ export default function FourOhFour() {
 				<h1 className={clsx(
 					'text-6xl md:text-9xl',
 				)}>
-					404
+					400
 				</h1>
 				<p className={clsx(
 					'mt-4 max-w-xl drop-shadow-md',
 					'text-2xl sm:text-3xl: md:text-4xl',
 					theme === 'dark' ? 'text-pyellow' : 'text-black'
 				)}>
-					no awards for you...
+					rotten tomatoes: 17% at best
 				</p>
 				<Link  href='/'
 					className={clsx(
@@ -44,6 +43,7 @@ export default function FourOhFour() {
 				)}>
 					go back to the method one clinic
 				</Link>
+
 			</div>
 		</div>
 	)

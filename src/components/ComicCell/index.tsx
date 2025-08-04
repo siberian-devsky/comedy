@@ -18,7 +18,7 @@ export default function ComicCell() {
 			)}
 		>
 			{/* id + profile pic */}
-			<div className={clsx('flex flex-col w-full h-full gap-4 mr-8')}>
+			<div className={clsx('flex flex-col w-full h-full gap-4 mr-4')}>
 				<div>
 					<Image
 						src={imgUrl}
