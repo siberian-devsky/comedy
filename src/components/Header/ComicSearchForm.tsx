@@ -101,6 +101,11 @@ export default function ComicSearchForm() {
 						router.push('/not-found')
 						return
 					}
+					
+					if (res.status === 400) {
+						router.push('/bad-request')
+						return
+					}
 				}
 
 				// great success!!

@@ -1,38 +1,38 @@
 import { Request, Response } from 'express'
-import { PrismaClient } from '../generated/prisma'
+// import { PrismaClient } from '../generated/prisma'
 import { PersonDetail } from '../types'
 
-const prisma = new PrismaClient()
+// const prisma = new PrismaClient()
 
 
 // GET /comics - get all comics
-export async function GetAllComics(req: Request, res: Response): Promise<void> {
-	try {
-		const comicData = await prisma.comic.findMany()
+// export async function GetAllComics(req: Request, res: Response): Promise<void> {
+// 	try {
+// 		const comicData = await prisma.comic.findMany()
 
-		if (!comicData) {
-			res.status(404).json({
-				status: 404,
-				message: 'Comics not found',
-			})
-			return
-		}
-		// filtered Data
-		res.status(200).json({
-			status: 200,
-			message: 'get all comics ok',
-			comics: comicData,
-		})
-		return
-	} catch (err) {
-		console.error('GetAllComics error:', err)
-		res.status(500).json({
-			status: 500,
-			message: 'Internal Server Error',
-		})
-		return
-	}
-}
+// 		if (!comicData) {
+// 			res.status(404).json({
+// 				status: 404,
+// 				message: 'Comics not found',
+// 			})
+// 			return
+// 		}
+// 		// filtered Data
+// 		res.status(200).json({
+// 			status: 200,
+// 			message: 'get all comics ok',
+// 			comics: comicData,
+// 		})
+// 		return
+// 	} catch (err) {
+// 		console.error('GetAllComics error:', err)
+// 		res.status(500).json({
+// 			status: 500,
+// 			message: 'Internal Server Error',
+// 		})
+// 		return
+// 	}
+// }
 
 // GET /comics - get one comic by name
 export async function FindComicByName(req: Request, res: Response): Promise<void> {
@@ -47,6 +47,7 @@ export async function FindComicByName(req: Request, res: Response): Promise<void
 	}
 
 	const name = req.params.name || 'Dave Chappelle'
+
 	const rootUrl = 'https://api.themoviedb.org/3'
 	const personUrl = encodeURI(`${rootUrl}/search/person?query=${name}&include_adult=false&language=en-US&page=1`)
 
@@ -95,7 +96,7 @@ export async function FindComicByName(req: Request, res: Response): Promise<void
 			return
 		}
 
-		console.debug(`Found ID: ${profile.id}`)
+		// get the detauls of a person
 		const detailsUrl = encodeURI(`${rootUrl}/person/${profile.id}`)
 
 		const detailsResponse = await fetch(detailsUrl, options)
@@ -141,4 +142,9 @@ export async function FindComicByName(req: Request, res: Response): Promise<void
 		})
 		return
 	}
+}
+
+export function AddTwo(n1: number, n2: number) {
+	const sum = (n1 + n2)
+	return sum
 }
