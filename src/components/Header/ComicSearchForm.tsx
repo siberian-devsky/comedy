@@ -144,6 +144,7 @@ export default function ComicSearchForm() {
 			onSubmit={handleSubmit}
 		>
 			<input
+				required
 				id='comicSearchForm'
 				type='text'
 				value={searchInput}

@@ -24,16 +24,16 @@ export default function FourOhFour() {
 				theme === 'dark' ? 'text-icdb' : 'text-black'
 			)}>
 				<h1 className={clsx(
-					'text-6xl md:text-9xl',
+					'text-lg md:text-6xl',
 				)}>
-					404
+					this person must be a c-lister
 				</h1>
 				<p className={clsx(
 					'mt-4 max-w-xl drop-shadow-md',
 					'text-2xl sm:text-3xl: md:text-4xl',
 					theme === 'dark' ? 'text-pyellow' : 'text-black'
 				)}>
-					no awards for you...
+					go back to the alleys...
 				</p>
 				<Link  href='/'
 					className={clsx(
