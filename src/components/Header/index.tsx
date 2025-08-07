@@ -1,10 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { Menu, X } from 'lucide-react'
 import ThemeSlider from '../Theme/ThemeSlider'
 import ComicSearchForm from './ComicSearchForm'
 import clsx from 'clsx'
 import { useTheme } from 'next-themes'
-import { BarricietoFontClass } from '@/lib/config'
 import { useUiContext } from '@/context/UiContext'
 
 export default function Header() {
@@ -63,24 +63,13 @@ export default function Header() {
 					{/* </div> */}
 
 					{/*//> menu button */}
-					{/* <div className='w-full'> */}
-						<button
-							id='menuToggle'
-							onClick={() => setMobileMenuIsOpen((prev) => !prev)}
-							className={clsx(
-								`${BarricietoFontClass}`,
-								'flex flex-row items-center justify-center',
-								'w-6 h-auto rounded-lg',
-								'font-bold cursor-pointer',
-								'bg-transparent text-2xl',
-								'transition-transform duration-300 ease-in-out',
-								theme === 'dark' ? 'text-icdb' : 'text-black',
-								mobileMenuIsOpen ? 'rotate-180' : 'rotate-0'
-							)}
-						>
-							?
-						</button>
-					{/* </div> */}
+					<button
+						id='menuToggle'
+						onClick={() => setMobileMenuIsOpen((prev) => !prev)}
+						className={clsx(theme === 'dark' && 'text-pyellow')}
+					>
+						{ mobileMenuIsOpen? <X/> : <Menu/> }
+					</button>
 				</div>
 			) : (
 				// else show the full menu
@@ -91,26 +80,24 @@ export default function Header() {
 			)}
 
 			{/* //> mobile menu */}
-			{deviceIsMobile && mobileMenuIsOpen && (
+			{deviceIsMobile && (
 				<div
 					className={clsx(
-						'absolute z-50 left-0 w-full h-auto p-4',
-						'bg-slate-900/70',
-						'transition-all duration-300 ease-in-out',
-						'opacity-100 translate-y-16',
-						deviceIsMobile
-							? 'w-0 -translate-y-full'
-							: 'w-48 translate-x-0'
+					'absolute left-0 -z-10 w-full p-4 bg-slate-900/70',
+					'transition-all duration-300 ease-in-out',
+					mobileMenuIsOpen
+						? 'opacity-100 translate-y-16 pointer-events-auto'
+						: 'opacity-0 -translate-y-16 pointer-events-none'
 					)}
 				>
-					<div className='flex flex-row justify-between'>
-						<ComicSearchForm />
-						<div className={'-translate-y-0.5'}>
-							<ThemeSlider />
-						</div>
+					<div className="flex flex-row justify-between">
+					<ComicSearchForm />
+					<div className="-translate-y-0.5">
+						<ThemeSlider />
+					</div>
 					</div>
 				</div>
-			)}
+				)}
 		</header>
 	)
 }

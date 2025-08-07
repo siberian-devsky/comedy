@@ -1,6 +1,6 @@
 import express from 'express'
 import initMiddleware from './middleware'
-import comicApiRoutes from './routes/apiRouter'
+import comicApiRoutes from './routes/peoplerouter'
 import dotenv from 'dotenv'
 
 dotenv.config({ quiet: true })

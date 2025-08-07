@@ -16,8 +16,7 @@ export default function Sidebar() {
 		<aside
 			id='sidebarAside'
 			className={clsx(
-				'h-full overflow-y-scroll',
-				'transition-all duration-300 ease-in-out'
+				'h-full overflow-y-scroll'
 			)}
 		>
 			{/*//> search history */}
@@ -27,7 +26,7 @@ export default function Sidebar() {
 					className={clsx(
 						'list-none',
 						'flex flex-col items-center gap-8 p-4',
-						theme === 'dark' && 'bg-black'
+						// theme === 'dark' && '
 					)}
 				>
 					{searchHistory.map((comic: Comic, index: number) => (

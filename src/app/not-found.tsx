@@ -33,7 +33,6 @@ export default function FourOhFour() {
 					'text-2xl sm:text-3xl: md:text-4xl',
 					theme === 'dark' ? 'text-pyellow' : 'text-black'
 				)}>
-					go back to the alleys...
 				</p>
 				<Link  href='/'
 					className={clsx(
