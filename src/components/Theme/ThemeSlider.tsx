@@ -21,9 +21,7 @@ export default function ThemeSlider() {
 			aria-checked={isDark}
 			onClick={() => setTheme(isDark ? 'light' : 'dark')} // Toggle theme on click
 			className={clsx(
-				'flex flex-row items-center justify-start',
-				'w-12 h-auto',
-				'translate-y-1 overflow-hidden',
+				'w-12 h-6 overflow-hidden',
 				'rounded-full cursor-pointer',
 				'border-2 border-pyellow',
 				isDark ? 'bg-slate-800' : 'bg-white'
@@ -32,7 +30,7 @@ export default function ThemeSlider() {
 			{/* pill container*/}
 			<div
 				className={clsx(
-					'w-full flex flex-row items-center justify-start',
+					'w-full h-full flex flex-row items-center justify-start',
 					'min-w-[42px]' //! prevent pill squish on mobile
 				)}
 			>

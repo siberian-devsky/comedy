@@ -1,13 +1,11 @@
 'use client'
 import { Comic } from '@/types'
-import { useTheme } from 'next-themes'
 import { useComicContext } from '@/context/ComicContext'
 import NamePill from '../NamePill'
 import clsx from 'clsx'
 
 export default function Sidebar() {
 	const { searchHistory } = useComicContext()
-	const { theme, } = useTheme()
 
 	console.log(searchHistory)
 

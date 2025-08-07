@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { useComicContext } from '@/context/ComicContext'
 import { Comic } from '@/types'
+import axios from 'axios'
 import clsx from 'clsx'
 
 export default function ComicSearchForm() {
@@ -91,24 +92,9 @@ export default function ComicSearchForm() {
 		} else {
 			// hit the network
 			try {
-				const res = await fetch(`/api/v1/getcomic/${searchInput}`, {
-					method: 'GET',
-				})
-				const data = await res.json()
+				const res = await axios.get(`/api/v1/getcomic/${searchInput}`)
+				const data = res.data
 
-				if (!res.ok) {
-					if (res.status === 404) {
-						router.push('/not-found')
-						return
-					}
-					
-					if (res.status === 400) {
-						router.push('/bad-request')
-						return
-					}
-				}
-
-				// great success!!
 				const comic: Comic = data.data
 
 				// build the imdb url
@@ -123,11 +109,21 @@ export default function ComicSearchForm() {
 				setonStage(comic)
 
 				// save last comic lastSelected
-				sessionStorage.setItem('latest', JSON.stringify(comic)) 
-
+				sessionStorage.setItem('latest', JSON.stringify(comic))
 			} catch (err) {
+				if (axios.isAxiosError(err)) {
+					if (err.response?.status === 404) {
+						router.push('/not-found')
+						return
+					}
+					if (err.response?.status === 400) {
+						router.push('/bad-request')
+						return
+					}
+				}
 				console.error(err)
 			}
+
 		}
 	}
 

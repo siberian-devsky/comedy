@@ -44,36 +44,48 @@ export default function Header() {
 					)}
 				>
 					{/*//> sidebar popout control */}					
-					{/* <div className='w-full'> */}
+					<button
+						id='showSidebar'
+						className='text-icdb'
+						onClick={() => setSidebarIsOpen( (prev) => !prev )}
+					>
+						<div className='flex flex-row gap-2 pl-2'>
+							<span className={clsx(
+								'transition-all duration-150 ease-linear',
+								sidebarIsOpen ? 'rotate-90' : 'rotate-0'
+							)}
+							>
+								&gt;
+							</span>
+							<span></span>
+						</div>
+					</button>
+
+					{/*//> menu button - mobile only*/}
+					<div className='flex flex-row items-center gap-3 h-6'>
+						<ThemeSlider />
 						<button
-							id='showSidebar'
-							className='text-icdb'
-							onClick={() => setSidebarIsOpen( (prev) => !prev )}
+							id='menuToggle'
+							onClick={() => setMobileMenuIsOpen((prev) => !prev)}
+							className={clsx(
+								'w-18 h-7 rounded-md text-xs',
+								'bg-gray-800 text-pyellow'
+							)}
 						>
-							<div className='flex flex-row gap-2 pl-2'>
-								<span className={clsx(
-									'transition-all duration-150 ease-linear',
-									sidebarIsOpen ? 'rotate-90' : 'rotate-0'
-								)}
-								>
-									&gt;
-								</span>
+							<div className='flex flex-row gap-1 items-center justify-center'>
+								<div>
+									{ mobileMenuIsOpen
+										? <X width={20} height={20}/>
+										: <Menu width={20} height={20}/> }
+								</div>
+								<div>Menu</div>
 							</div>
 						</button>
-					{/* </div> */}
-
-					{/*//> menu button */}
-					<button
-						id='menuToggle'
-						onClick={() => setMobileMenuIsOpen((prev) => !prev)}
-						className={clsx(theme === 'dark' && 'text-pyellow')}
-					>
-						{ mobileMenuIsOpen? <X/> : <Menu/> }
-					</button>
+					</div>
 				</div>
 			) : (
 				// else show the full menu
-				<div className={clsx('w-full flex flex-row justify-between')}>
+				<div className={clsx('w-full h-full flex flex-row justify-between items-center')}>
 					<ComicSearchForm/>
 					<ThemeSlider />
 				</div>
@@ -83,18 +95,17 @@ export default function Header() {
 			{deviceIsMobile && (
 				<div
 					className={clsx(
-					'absolute left-0 -z-10 w-full p-4 bg-slate-900/70',
+					'absolute left-0 -z-10 p-2',
 					'transition-all duration-300 ease-in-out',
 					mobileMenuIsOpen
 						? 'opacity-100 translate-y-16 pointer-events-auto'
 						: 'opacity-0 -translate-y-16 pointer-events-none'
 					)}
 				>
-					<div className="flex flex-row justify-between">
-					<ComicSearchForm />
-					<div className="-translate-y-0.5">
-						<ThemeSlider />
-					</div>
+					<div className='w-full flex flex-row justify-end'>
+						{/* <div> */}
+							<ComicSearchForm />
+						{/* </div> */}
 					</div>
 				</div>
 				)}

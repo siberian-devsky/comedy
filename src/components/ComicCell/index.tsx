@@ -39,6 +39,7 @@ export default function ComicCell() {
 								className={clsx('sticky top-0 pb-4')}
 							>
 								{onStage.name}
+								{/* imdb link */}
 								<span>
 									<a href={onStage.imdb_id} target='_blank'>
 										<button className={clsx(
